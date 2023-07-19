@@ -54,12 +54,14 @@ class FdBkQuestions(models.Model):
     Score_5_Color = models.CharField(max_length=15)
     Score_5_FollowUp_Question = models.TextField()
     Score_5_Display_Message = models.TextField()
-    CompanyId = models.BigIntegerField()
-    BranchId = models.BigIntegerField()
+    # BranchId = models.BigIntegerField()
     question_type = models.CharField(max_length=20)  # New field added for question type
 
     # Add a ForeignKey field to relate the question to the business
     business = models.ForeignKey(FdBkConfig, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.Question}"
 
 
 class Feedback(models.Model):
@@ -67,9 +69,9 @@ class Feedback(models.Model):
     Question = models.TextField()
     Rating = models.IntegerField()
     Comment = models.TextField(blank=True, null=True)
-    OrderUId = models.BigIntegerField()
-    CompanyId = models.BigIntegerField()
-    BranchId = models.BigIntegerField()
+    # OrderUId = models.BigIntegerField()
+    # Company_Id = models.ForeignKey(FdBkConfig, on_delete=models.CASCADE)
+    # BranchId = models.BigIntegerField()
     question = models.ForeignKey(FdBkQuestions, on_delete=models.CASCADE)
 
     def __str__(self):
