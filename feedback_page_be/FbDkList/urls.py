@@ -1,11 +1,8 @@
-# FdBkConfig/urls.py
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import FdBkConfigViewSet
-
-router = DefaultRouter()
-router.register(r'businesses', FdBkConfigViewSet)
+from django.urls import path
+from .views import FdBkConfigListView, OrderDetailView, FeedbackCreateView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('businesses/', FdBkConfigListView.as_view(), name='business-list'),
+    path('orders/<uuid:id>/', OrderDetailView.as_view(), name='order-detail'),
+    path('feedback/', FeedbackCreateView.as_view(), name='feedback-create'),
 ]

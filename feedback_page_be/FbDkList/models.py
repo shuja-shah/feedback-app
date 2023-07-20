@@ -1,8 +1,9 @@
+import uuid
 from django.db import models
 
 
 class FdBkConfig(models.Model):
-    # ID = models.IntegerField(null=True)
+    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     BU_ID = models.IntegerField(null=True)
     BU_Name = models.CharField(max_length=255, null=True)
     BU_Address = models.TextField(null=True)
@@ -25,8 +26,17 @@ class FdBkConfig(models.Model):
     )  # New field added for last image
 
 
+class Order(models.Model):
+
+    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    order_number = models.CharField(max_length=20)
+    order_date = models.DateField()
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    business = models.ForeignKey(FdBkConfig, on_delete=models.CASCADE, related_name='orders')
+
+
 class FdBkQuestions(models.Model):
-    # Id = models.BigAutoField(primary_key=True)
+    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     Question = models.TextField()
     IsMandatory = models.CharField(max_length=30)
     Score_1_Feeling = models.CharField(max_length=30)
@@ -55,17 +65,16 @@ class FdBkQuestions(models.Model):
     Score_5_FollowUp_Question = models.TextField()
     Score_5_Display_Message = models.TextField()
     # BranchId = models.BigIntegerField()
-    question_type = models.CharField(max_length=20)  # New field added for question type
+    question_type = models.CharField(max_length=20) 
 
-    # Add a ForeignKey field to relate the question to the business
-    business = models.ForeignKey(FdBkConfig, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.Question}"
 
 
 class Feedback(models.Model):
-    Id = models.BigAutoField(primary_key=True)
+    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     Question = models.TextField()
     Rating = models.IntegerField()
     Comment = models.TextField(blank=True, null=True)
