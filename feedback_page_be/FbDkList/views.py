@@ -9,7 +9,7 @@ class FdBkConfigListView(ListAPIView):
 class OrderDetailView(RetrieveAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    lookup_field = 'Id'
+    # lookup_field = 'order_number'
 
 class FeedbackCreateView(CreateAPIView):
     queryset = Feedback.objects.all()

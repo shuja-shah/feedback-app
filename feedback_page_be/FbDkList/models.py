@@ -26,14 +26,6 @@ class FdBkConfig(models.Model):
     )  # New field added for last image
 
 
-class Order(models.Model):
-
-    # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    order_number = models.CharField(max_length=20)
-    order_date = models.DateField()
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    business = models.ForeignKey(FdBkConfig, on_delete=models.CASCADE, related_name='orders')
-
 
 class FdBkQuestions(models.Model):
     # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -65,12 +57,24 @@ class FdBkQuestions(models.Model):
     Score_5_FollowUp_Question = models.TextField()
     Score_5_Display_Message = models.TextField()
     # BranchId = models.BigIntegerField()
-    question_type = models.CharField(max_length=20) 
+    question_type = models.CharField(max_length=20)
 
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
+    # order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.Question}"
+
+
+class Order(models.Model):
+    # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    order_number = models.CharField(max_length=20)
+    order_date = models.DateField()
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    business = models.ForeignKey(
+        FdBkConfig, on_delete=models.CASCADE, related_name="orders"
+    )
+    questions = models.ManyToManyField(FdBkQuestions)
+
 
 
 class Feedback(models.Model):
