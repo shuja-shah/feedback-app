@@ -1,27 +1,33 @@
-import { Avatar, Box, Grid, Typography } from "./Componenets/MUI";
+import { Avatar, Box, Grid, Rating, Typography } from "./Componenets/MUI";
 
-const QuestionCard = ({questions}) => {
-    return (
-        <Box
+const QuestionCard = ({ questions, params }) => {
+  const currentTarget = {};
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: "1rem",
+      }}
+    >
+      <Typography
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          gap: "1rem",
+          fontFamily: "Lato",
+          fontWeight: "600",
         }}
       >
-        <Typography sx={{
-            fontFamily:'Lato',
-            fontWeight:'600',
-        }}
-        >
-      
-        </Typography>
-      </Box>
-    )
-}
+        {params?.FdBk_Page_Title ?? "Welcome to this Survey"}
+      </Typography>
 
+      <Typography sx={{ m: "1rem 0", fontFamily, fontWeight: "400" }}>
+        {currentTarget?.Question ?? "This is a question?"}
+      </Typography>
 
+      <Rating />
+    </Box>
+  );
+};
 
 const FormStack = ({ params }) => {
   const questions = [];
