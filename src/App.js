@@ -3,10 +3,10 @@ import "./index.css";
 import MainPage from "./MainPage";
 
 const App = () => {
-  <Router>
+ return (<Router>
     <Routes>
       <Route exact path="/" element={<MainPage />} />
     </Routes>
-  </Router>;
+  </Router>);
 };
 export default App;

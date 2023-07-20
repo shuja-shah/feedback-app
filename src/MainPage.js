@@ -1,5 +1,7 @@
 import { Avatar, Box, Grid, Rating, Typography } from "./Componenets/MUI";
 
+export const fontFamily = "Lato";
+
 const QuestionCard = ({ questions, params }) => {
   const currentTarget = {};
   return (
@@ -11,9 +13,18 @@ const QuestionCard = ({ questions, params }) => {
         gap: "1rem",
       }}
     >
+      <Avatar
+        sx={{
+          m: "auto auto",
+        }}
+        src={params?.BU_Logo ?? ""}
+        alt={params?.BU_Name ?? ""}
+      >
+        L
+      </Avatar>
       <Typography
         sx={{
-          fontFamily: "Lato",
+          fontFamily,
           fontWeight: "600",
         }}
       >
@@ -24,7 +35,7 @@ const QuestionCard = ({ questions, params }) => {
         {currentTarget?.Question ?? "This is a question?"}
       </Typography>
 
-      <Rating />
+      <Rating size="large" />
     </Box>
   );
 };
@@ -40,10 +51,6 @@ const FormStack = ({ params }) => {
       xl={6}
       lg={6}
     >
-      <Avatar src={params?.BU_Logo ?? ""} alt={params?.BU_Name ?? ""}>
-        L
-      </Avatar>
-
       <QuestionCard questions={questions} />
     </Grid>
   );
