@@ -40,6 +40,19 @@ const QuestionCard = ({ questions, params }) => {
   );
 };
 
+const Illustration = ({ params }) => {
+  return (
+    <Grid
+      item
+      xl={6}
+      lg={6}
+      sx={{ height: "100%", backgroundColor: "#711fff" }}
+    >
+      Illustration
+    </Grid>
+  );
+};
+
 const FormStack = ({ params }) => {
   const questions = [];
   return (
@@ -50,6 +63,10 @@ const FormStack = ({ params }) => {
       alignItems="center"
       xl={6}
       lg={6}
+      sx={{
+        backgroundColor: "#efeff5",
+        height: "100%",
+      }}
     >
       <QuestionCard questions={questions} />
     </Grid>
@@ -68,8 +85,20 @@ const MainPage = ({ params }) => {
         justifyContent: "center",
       }}
     >
-      <Grid container sx={{ width: "85%", height: "85%", borderRadius: "8px" }}>
+      <Grid
+        container
+        sx={{
+          width: "93%",
+          height: "93%",
+          borderRadius: "8px",
+          border: "1.5px solid #d9d9d9",
+          flexWrap: "nowrap",
+        }}
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <FormStack params={params} />
+        <Illustration params={params} />
       </Grid>
     </Box>
   );
