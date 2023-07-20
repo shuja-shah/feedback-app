@@ -3,7 +3,7 @@ from django.db import models
 
 
 class FdBkConfig(models.Model):
-    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     BU_ID = models.IntegerField(null=True)
     BU_Name = models.CharField(max_length=255, null=True)
     BU_Address = models.TextField(null=True)
@@ -28,7 +28,7 @@ class FdBkConfig(models.Model):
 
 class Order(models.Model):
 
-    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     order_number = models.CharField(max_length=20)
     order_date = models.DateField()
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -36,7 +36,7 @@ class Order(models.Model):
 
 
 class FdBkQuestions(models.Model):
-    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     Question = models.TextField()
     IsMandatory = models.CharField(max_length=30)
     Score_1_Feeling = models.CharField(max_length=30)
@@ -67,20 +67,16 @@ class FdBkQuestions(models.Model):
     # BranchId = models.BigIntegerField()
     question_type = models.CharField(max_length=20) 
 
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.Question}"
 
 
 class Feedback(models.Model):
-    Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     Question = models.TextField()
     Rating = models.IntegerField()
     Comment = models.TextField(blank=True, null=True)
-    # OrderUId = models.BigIntegerField()
-    # Company_Id = models.ForeignKey(FdBkConfig, on_delete=models.CASCADE)
-    # BranchId = models.BigIntegerField()
     question = models.ForeignKey(FdBkQuestions, on_delete=models.CASCADE)
 
     def __str__(self):
