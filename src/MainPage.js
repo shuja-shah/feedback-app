@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -15,9 +15,27 @@ export const fontFamily = "Lato";
 
 import Ill from "./assets/ill.png";
 import EmojiRatings from "./Componenets/StyledRating";
+import { CircularProgress } from "@mui/material";
+
+const PreLoader = () => (
+  <Box
+    sx={{
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      background: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <CircularProgress
+      sx={{ animation: "spin 2s linear infinite", color: "#711fff" }}
+    />
+  </Box>
+);
 
 const QuestionCard = ({ questions, params }) => {
-  const currentTarget = { question_type: "emoji" };
+  const currentTarget = { question_type: "hearts" };
   const [score, setScore] = useState();
 
   return (
@@ -34,13 +52,15 @@ const QuestionCard = ({ questions, params }) => {
         sx={{
           fontFamily,
           fontWeight: "600",
+          m: "1rem 0 0 0",
+          fontSize: "1.5rem",
         }}
       >
         {params?.FdBk_Page_Title ?? "Welcome to this Survey"}
       </Typography>
 
       <Typography
-        sx={{ m: "1rem 0", fontFamily, fontWeight: "400", width: "70%" }}
+        sx={{ m: "1rem 0 0 0", fontFamily, fontWeight: "400", width: "70%" }}
       >
         {currentTarget?.Question ??
           "Q:1 On a Scale of one two 5, How would you rate the recent support that we have given you?"}
@@ -63,7 +83,6 @@ const QuestionCard = ({ questions, params }) => {
             setScore(newValue);
           }}
           sx={{ width: "70%", justifyContent: "space-between" }}
-          
         />
       ) : (
         <Rating
@@ -163,7 +182,16 @@ const FormStack = ({ params }) => {
 };
 
 const MainPage = ({ params }) => {
-  return (
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+    }
+  }, [loading]);
+  return !loading ? (
     <Box
       sx={{
         height: "100vh",
@@ -177,8 +205,8 @@ const MainPage = ({ params }) => {
       <Grid
         container
         sx={{
-          width: "93%",
-          height: "93%",
+          width: "73%",
+          height: "73%",
           borderRadius: "8px",
           border: "1.5px solid #d9d9d9",
           flexWrap: "nowrap",
@@ -190,6 +218,8 @@ const MainPage = ({ params }) => {
         <Illustration params={params} />
       </Grid>
     </Box>
+  ) : (
+    <PreLoader />
   );
 };
 
