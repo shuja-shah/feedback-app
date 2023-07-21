@@ -8,13 +8,16 @@ import {
   TextField,
   Typography,
 } from "./Componenets/MUI";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export const fontFamily = "Lato";
 
 import Ill from "./assets/ill.png";
+import EmojiRatings from "./Componenets/StyledRating";
 
 const QuestionCard = ({ questions, params }) => {
-  const currentTarget = {};
+  const currentTarget = { question_type: "emoji" };
   const [score, setScore] = useState();
 
   return (
@@ -42,15 +45,36 @@ const QuestionCard = ({ questions, params }) => {
         {currentTarget?.Question ??
           "Q:1 On a Scale of one two 5, How would you rate the recent support that we have given you?"}
       </Typography>
-
-      <Rating
-        size="large"
-        sx={{ width: "70%", justifyContent: "space-between" }}
-        value={score}
-        onChange={(_, newValue) => {
-          setScore(newValue);
-        }}
-      />
+      {currentTarget?.question_type === "hearts" ? (
+        <Rating
+          size="large"
+          sx={{ width: "70%", justifyContent: "space-between" }}
+          value={score}
+          onChange={(_, newValue) => {
+            setScore(newValue);
+          }}
+          icon={<FavoriteIcon fontSize="inherit" />}
+          emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+        />
+      ) : currentTarget?.question_type === "emoji" ? (
+        <EmojiRatings
+          value={score}
+          onChange={(_, newValue) => {
+            setScore(newValue);
+          }}
+          sx={{ width: "70%", justifyContent: "space-between" }}
+          
+        />
+      ) : (
+        <Rating
+          size="large"
+          sx={{ width: "70%", justifyContent: "space-between" }}
+          value={score}
+          onChange={(_, newValue) => {
+            setScore(newValue);
+          }}
+        />
+      )}
       {score && (
         <TextField
           sx={{ width: "70%" }}
@@ -76,11 +100,12 @@ const QuestionCard = ({ questions, params }) => {
           },
 
           "&.Mui-disabled": {
-            backgroundColor: "#711fff",
+            backgroundColor: "#ccc",
             color: "#fff",
             opacity: "0.5",
           },
         }}
+        disabled={!score}
       >
         Next
       </Button>
