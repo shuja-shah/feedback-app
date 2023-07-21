@@ -9,19 +9,11 @@ const QuestionCard = ({ questions, params }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start",
+        alignItems: "center",
         gap: "1rem",
+        width: "100%",
       }}
     >
-      <Avatar
-        sx={{
-          m: "auto auto",
-        }}
-        src={params?.BU_Logo ?? ""}
-        alt={params?.BU_Name ?? ""}
-      >
-        L
-      </Avatar>
       <Typography
         sx={{
           fontFamily,
@@ -31,11 +23,17 @@ const QuestionCard = ({ questions, params }) => {
         {params?.FdBk_Page_Title ?? "Welcome to this Survey"}
       </Typography>
 
-      <Typography sx={{ m: "1rem 0", fontFamily, fontWeight: "400" }}>
-        {currentTarget?.Question ?? "This is a question?"}
+      <Typography
+        sx={{ m: "1rem 0", fontFamily, fontWeight: "400", width: "70%" }}
+      >
+        {currentTarget?.Question ??
+          "Q:1 On a Scale of one two 5, How would you rate the recent support that we have given you?"}
       </Typography>
 
-      <Rating size="large" />
+      <Rating
+        size="large"
+        sx={{ width: "70%", justifyContent: "space-between" }}
+      />
     </Box>
   );
 };
@@ -61,6 +59,7 @@ const FormStack = ({ params }) => {
       container
       justifyContent="center"
       alignItems="center"
+      direction="column"
       xl={6}
       lg={6}
       sx={{
@@ -68,6 +67,15 @@ const FormStack = ({ params }) => {
         height: "100%",
       }}
     >
+      <Avatar
+        sx={{
+          m: "0 auto",
+        }}
+        src={params?.BU_Logo ?? ""}
+        alt={params?.BU_Name ?? ""}
+      >
+        L
+      </Avatar>
       <QuestionCard questions={questions} />
     </Grid>
   );

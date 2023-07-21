@@ -3,10 +3,12 @@ import "./index.css";
 import MainPage from "./MainPage";
 
 const App = () => {
- return (<Router>
-    <Routes>
-      <Route exact path="/" element={<MainPage />} />
-    </Routes>
-  </Router>);
+  return (
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<MainPage />} />
+      </Routes>
+    </Router>
+  );
 };
 export default App;
