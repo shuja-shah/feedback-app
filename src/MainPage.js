@@ -1,9 +1,22 @@
-import { Avatar, Box, Grid, Rating, Typography } from "./Componenets/MUI";
+import { useState } from "react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  Rating,
+  TextField,
+  Typography,
+} from "./Componenets/MUI";
 
 export const fontFamily = "Lato";
 
+import Ill from "./assets/ill.png";
+
 const QuestionCard = ({ questions, params }) => {
   const currentTarget = {};
+  const [score, setScore] = useState();
+
   return (
     <Box
       sx={{
@@ -33,7 +46,44 @@ const QuestionCard = ({ questions, params }) => {
       <Rating
         size="large"
         sx={{ width: "70%", justifyContent: "space-between" }}
+        value={score}
+        onChange={(_, newValue) => {
+          setScore(newValue);
+        }}
       />
+      {score && (
+        <TextField
+          sx={{ width: "70%" }}
+          label="Whats driving your review (Optional)"
+          multiline
+          rows={4}
+        />
+      )}
+
+      <Button
+        sx={{
+          width: "70%",
+          height: "3rem",
+          borderRadius: "8px",
+          backgroundColor: "#711fff",
+          color: "#fff",
+          fontFamily,
+          fontWeight: "600",
+          fontSize: "1.2rem",
+          "&:hover": {
+            backgroundColor: "#711fff",
+            color: "#fff",
+          },
+
+          "&.Mui-disabled": {
+            backgroundColor: "#711fff",
+            color: "#fff",
+            opacity: "0.5",
+          },
+        }}
+      >
+        Next
+      </Button>
     </Box>
   );
 };
@@ -44,9 +94,15 @@ const Illustration = ({ params }) => {
       item
       xl={6}
       lg={6}
-      sx={{ height: "100%", backgroundColor: "#711fff" }}
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
-      Illustration
+      <img src={Ill} alt="Illustration" />
     </Grid>
   );
 };

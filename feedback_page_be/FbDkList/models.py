@@ -26,8 +26,12 @@ class FdBkConfig(models.Model):
     )  # New field added for last image
 
 
-
 class FdBkQuestions(models.Model):
+    QUESTION_TYPE_CHOICES = [
+        ("stars", "Stars"),
+        ("hearts", "Hearts"),
+        ("emoji", "Emoji"),
+    ]
     # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     Question = models.TextField()
     IsMandatory = models.CharField(max_length=30)
@@ -57,7 +61,11 @@ class FdBkQuestions(models.Model):
     Score_5_FollowUp_Question = models.TextField()
     Score_5_Display_Message = models.TextField()
     # BranchId = models.BigIntegerField()
-    question_type = models.CharField(max_length=20)
+    question_type = models.CharField(
+        max_length=20,
+        choices=QUESTION_TYPE_CHOICES,
+        default="stars",  # Set a default value for the choice field
+    )
 
     # order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
 
@@ -74,7 +82,6 @@ class Order(models.Model):
         FdBkConfig, on_delete=models.CASCADE, related_name="orders"
     )
     questions = models.ManyToManyField(FdBkQuestions)
-
 
 
 class Feedback(models.Model):
