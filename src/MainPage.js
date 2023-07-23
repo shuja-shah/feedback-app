@@ -177,25 +177,14 @@ const QuestionCard = ({ questions, params }) => {
         width: "100%",
       }}
     >
-      <Typography
-        sx={{
-          fontFamily,
-          fontWeight: "600",
-        }}
-      >
-        {params?.FdBk_Page_Title ?? "Welcome to this Survey"}
-      </Typography>
-
-      <Typography
-        sx={{ m: "1rem 0", fontFamily, fontWeight: "400", width: "70%" }}
-      >
+      <Typography sx={{ m: "1rem 0", fontFamily, fontWeight: "400" }}>
         {currentTarget?.Question ??
           "Q:1 On a Scale of one two 5, How would you rate the recent support that we have given you?"}
       </Typography>
 
       <Rating
         size="large"
-        sx={{ width: "70%", justifyContent: "space-between" }}
+        sx={{ width: "100%", justifyContent: "space-between" }}
       />
     </Box>
   );
@@ -291,6 +280,7 @@ const IntroRow = () => {
             fontFamily,
             fontWeight: "600",
             fontSize: "1rem",
+            color: "#091E42",
           }}
         >
           1 of 6
@@ -300,6 +290,7 @@ const IntroRow = () => {
           sx={{
             fontFamily,
             fontSize: "0.9rem",
+            color: "#344563",
           }}
         >
           0% Completed
@@ -315,7 +306,7 @@ const FormStack = ({ params }) => {
     <Grid
       item
       container
-      justifyContent="flex-start"
+      //   justifyContent="space-between"
       alignItems="center"
       direction="column"
       xl={6}
@@ -324,10 +315,33 @@ const FormStack = ({ params }) => {
         backgroundColor: "#fff",
         height: "100%",
         position: "relative",
+        borderRadius: "8px",
       }}
     >
       <IntroRow />
-      <QuestionCard questions={questions} />
+      <Box
+        sx={{
+          width: "90%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          justifyContent: "center",
+          margin: "150px 0 0 0",
+          //   height: "100%",
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily,
+            fontWeight: "600",
+            fontSize: "1.1rem",
+            color: "#091E42",
+          }}
+        >
+          {params?.FdBk_Page_Title ?? "Welcome to this Survey"}
+        </Typography>
+        <QuestionCard questions={questions} />
+      </Box>
       <UpperLeftIllustration
         style={{
           position: "absolute",
