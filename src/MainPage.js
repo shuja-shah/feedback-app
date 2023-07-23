@@ -4,8 +4,10 @@ import {
   Grid,
   ProgressBar,
   Rating,
+  TextField,
   Typography,
 } from "./Componenets/MUI";
+import { useState } from "react";
 
 export const fontFamily = "Poppins";
 
@@ -167,6 +169,7 @@ const LargeCircle = ({ style }) => {
 
 const QuestionCard = ({ questions, params }) => {
   const currentTarget = {};
+  const [score, setScore] = useState(0);
   return (
     <Box
       sx={{
@@ -185,6 +188,24 @@ const QuestionCard = ({ questions, params }) => {
       <Rating
         size="large"
         sx={{ width: "100%", justifyContent: "space-between" }}
+      />
+
+      <TextField
+        sx={{
+          width: "100%",
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "8px",
+
+            "&:hover fieldset": {
+              borderColor: "#6070FF",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#6070FF",
+            },
+          },
+        }}
+        multiline
+        rows={4}
       />
     </Box>
   );
