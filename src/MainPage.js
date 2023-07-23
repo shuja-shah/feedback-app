@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Grid,
   ProgressBar,
   Rating,
@@ -205,8 +206,41 @@ const QuestionCard = ({ questions, params }) => {
           },
         }}
         multiline
-        rows={4}
+        rows={3}
       />
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <Button
+          sx={{
+            borderRadius: "8px",
+            border: "1px solid #7F8CFF",
+            background: "#FFF",
+            transition: "all 0.3s ease-in-out",
+            fontFamily,
+            cursor: "pointer",
+            color: "7F8CFF",
+
+            "&:hover": {
+              background: "#2230D2",
+              color: "#fff",
+              fontWeight: "600",
+            },
+            "&:active": {
+              background: "#2230D2",
+              color: "#fff",
+              fontWeight: "600",
+            },
+          }}
+        >
+          Next
+        </Button>
+      </Box>
     </Box>
   );
 };
