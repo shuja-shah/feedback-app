@@ -72,6 +72,92 @@ const BottomLeftIllustration = ({ style }) => {
   );
 };
 
+const RightSideIllustration = ({ style }) => {
+  return (
+    <svg
+      width={112}
+      height={125}
+      viewBox="0 0 112 125"
+      style={style}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        y="35.4209"
+        width={90}
+        height="24.699"
+        transform="rotate(-23.1765 0 35.4209)"
+        fill="#7F8CFF"
+      />
+      <path
+        d="M106.207 57.913C102.738 51.7566 97.8692 46.5034 91.9932 42.5789C86.1172 38.6544 79.3996 36.1687 72.3842 35.3233C65.3689 34.4778 58.2531 35.2963 51.6129 37.7124C44.9728 40.1286 38.9949 44.0745 34.1634 49.2306C29.3318 54.3868 25.7824 60.6082 23.8025 67.3913C21.8227 74.1743 21.468 81.3283 22.7672 88.2739C24.0664 95.2195 26.983 101.762 31.2808 107.37C35.5786 112.979 41.1368 117.497 47.5054 120.558L55.8939 103.106C52.2658 101.362 49.0992 98.7882 46.6508 95.5928C44.2023 92.3975 42.5408 88.6705 41.8006 84.7136C41.0605 80.7567 41.2625 76.6811 42.3905 72.8168C43.5184 68.9525 45.5405 65.4082 48.293 62.4707C51.0455 59.5333 54.4511 57.2853 58.234 55.9088C62.0169 54.5323 66.0708 54.0661 70.0674 54.5477C74.064 55.0294 77.891 56.4454 81.2386 58.6812C84.5862 60.917 87.3602 63.9097 89.336 67.417L106.207 57.913Z"
+        fill="white"
+      />
+    </svg>
+  );
+};
+
+const RightSideMiddleIllustration = ({ style }) => {
+  return (
+    <svg
+      width={145}
+      height={89}
+      viewBox="0 0 145 89"
+      style={style}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M37.4231 17.7976L131.607 88.1009L144.184 71.2518L50 0.948524L37.4231 17.7976Z"
+        fill="#7F8CFF"
+      />
+      <circle
+        cx="33.8608"
+        cy="42.8608"
+        r={24}
+        transform="rotate(48.9435 33.8608 42.8608)"
+        fill="white"
+      />
+    </svg>
+  );
+};
+
+const RightSideLeftBottomIllustration = ({ style }) => {
+  return (
+    <svg
+      width={61}
+      height={57}
+      viewBox="0 0 61 57"
+      style={style}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        y="22.3473"
+        width="55.6001"
+        height="9.94658"
+        transform="rotate(-23.6989 0 22.3473)"
+        fill="white"
+      />
+      <path
+        d="M23.0844 21C20.9403 26.0219 20.8789 31.6898 22.9138 36.7569C24.9487 41.824 28.9131 45.8752 33.935 48.0193C38.9568 50.1634 44.6247 50.2248 49.6918 48.1899C54.7589 46.155 58.8101 42.1906 60.9542 37.1687L23.0844 21Z"
+        fill="#7F8CFF"
+      />
+    </svg>
+  );
+};
+
+const LargeCircle = ({ style }) => {
+  return (
+    <svg
+      width={55}
+      height={55}
+      viewBox="0 0 55 55"
+      style={style}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="27.5" cy="27.5" r="27.5" fill="#7F8CFF" />
+    </svg>
+  );
+};
+
 const QuestionCard = ({ questions, params }) => {
   const currentTarget = {};
   return (
@@ -114,9 +200,42 @@ const Illustration = ({ params }) => {
       item
       xl={6}
       lg={6}
-      sx={{ height: "100%", backgroundColor: "#711fff" }}
+      sx={{
+        height: "100%",
+        backgroundColor: "#6070FF",
+        borderRadius: "8px",
+        position: "relative",
+      }}
     >
-      Illustration
+      <RightSideIllustration
+        style={{
+          position: "absolute",
+          right: "6%",
+          top: "11%",
+        }}
+      />
+
+      <RightSideMiddleIllustration
+        style={{
+          position: "absolute",
+          left: "-7%",
+          top: "45%",
+        }}
+      />
+      <RightSideLeftBottomIllustration
+        style={{
+          position: "absolute",
+          bottom: "7%",
+          left: "4%",
+        }}
+      />
+      <LargeCircle
+        style={{
+          position: "absolute",
+          top: "65%",
+          left: "50%",
+        }}
+      />
     </Grid>
   );
 };
@@ -190,11 +309,12 @@ const MainPage = ({ params }) => {
       <Grid
         container
         sx={{
-          width: "93%",
-          height: "93%",
+          width: "80%",
+          height: "80%",
           borderRadius: "8px",
           border: "1.5px solid #d9d9d9",
           flexWrap: "nowrap",
+          filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
         }}
         alignItems="center"
         justifyContent="space-between"
