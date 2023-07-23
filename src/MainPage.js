@@ -1,4 +1,11 @@
-import { Avatar, Box, Grid, Rating, Typography } from "./Componenets/MUI";
+import {
+  Avatar,
+  Box,
+  Grid,
+  ProgressBar,
+  Rating,
+  Typography,
+} from "./Componenets/MUI";
 
 export const fontFamily = "Poppins";
 
@@ -198,8 +205,8 @@ const Illustration = ({ params }) => {
   return (
     <Grid
       item
-      xl={5.5}
-      lg={5.5}
+      xl={6}
+      lg={6}
       sx={{
         height: "100%",
         backgroundColor: "#6070FF",
@@ -240,32 +247,86 @@ const Illustration = ({ params }) => {
   );
 };
 
+const IntroRow = () => {
+  return (
+    <Box
+      sx={{
+        width: "90%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        p: "0.88rem 0",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+        }}
+      >
+        <Avatar>L</Avatar>
+        <Typography
+          sx={{
+            fontFamily,
+            fontWeight: "600",
+            color: "#6070FF",
+            fontSize: "1.1rem",
+          }}
+        >
+          Liza Web{" "}
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          textAlign: "right",
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily,
+            fontWeight: "600",
+            fontSize: "1rem",
+          }}
+        >
+          1 of 6
+        </Typography>
+        <ProgressBar />
+        <Typography
+          sx={{
+            fontFamily,
+            fontSize: "0.9rem",
+          }}
+        >
+          0% Completed
+        </Typography>
+      </Box>
+    </Box>
+  );
+};
+
 const FormStack = ({ params }) => {
   const questions = [];
   return (
     <Grid
       item
       container
-      justifyContent="center"
+      justifyContent="flex-start"
       alignItems="center"
       direction="column"
-      xl={6.5}
-      lg={6.5}
+      xl={6}
+      lg={6}
       sx={{
         backgroundColor: "#fff",
         height: "100%",
         position: "relative",
       }}
     >
-      <Avatar
-        sx={{
-          m: "0 auto",
-        }}
-        src={params?.BU_Logo ?? ""}
-        alt={params?.BU_Name ?? ""}
-      >
-        L
-      </Avatar>
+      <IntroRow />
       <QuestionCard questions={questions} />
       <UpperLeftIllustration
         style={{
