@@ -7,6 +7,7 @@ import {
   Rating,
   Button,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import LinearProgress, {
   linearProgressClasses,
@@ -35,4 +36,15 @@ const ProgressBar = () => {
     />
   );
 };
-export { Alert, Typography, Box, Grid, Avatar, Rating, Button, ProgressBar , TextField};
+export {
+  Alert,
+  Typography,
+  Box,
+  Grid,
+  Avatar,
+  Rating,
+  Button,
+  ProgressBar,
+  TextField,
+  Tooltip,
+};

@@ -6,9 +6,11 @@ import {
   ProgressBar,
   Rating,
   TextField,
+  Tooltip,
   Typography,
 } from "./Componenets/MUI";
 import { useState } from "react";
+import InfoIcon from "@mui/icons-material/Info";
 
 export const fontFamily = "Poppins";
 
@@ -177,11 +179,11 @@ const QuestionCard = ({ questions, params }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "1rem",
+        gap: "0.5rem",
         width: "100%",
       }}
     >
-      <Typography sx={{ m: "1rem 0", fontFamily, fontWeight: "400" }}>
+      <Typography sx={{ m: "1rem 0", fontFamily, fontWeight: "400" , color: "#344563",}}>
         {currentTarget?.Question ??
           "Q:1 On a Scale of one two 5, How would you rate the recent support that we have given you?"}
       </Typography>
@@ -190,6 +192,34 @@ const QuestionCard = ({ questions, params }) => {
         size="large"
         sx={{ width: "100%", justifyContent: "space-between" }}
       />
+      <Box
+        sx={{
+          display: "flex",
+          gap: "1rem",
+          alignItems: "center",
+          width: "100%",
+          justifyContent: "flex-start",
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily,
+            fontWeight: "500",
+            color: "#091E42",
+            fontSize: "0.9rem",
+          }}
+        >
+          Follow up Question
+        </Typography>
+        <Tooltip title="Provide more details on why you choose this rating">
+          <InfoIcon
+            sx={{
+              cursor: "pointer",
+              fill: "#6070FF",
+            }}
+          />
+        </Tooltip>
+      </Box>
 
       <TextField
         sx={{
@@ -381,7 +411,7 @@ const FormStack = ({ params }) => {
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          margin: "150px 0 0 0",
+          margin: "110px 0 0 0",
           //   height: "100%",
         }}
       >
@@ -400,8 +430,8 @@ const FormStack = ({ params }) => {
       <UpperLeftIllustration
         style={{
           position: "absolute",
-          top: "11%",
-          left: "7%",
+          top: "12%",
+          left: "4%",
         }}
       />
 
@@ -416,7 +446,7 @@ const FormStack = ({ params }) => {
       <BottomLeftIllustration
         style={{
           position: "absolute",
-          bottom: "11%",
+          bottom: "7%",
           left: "4%",
         }}
       />
