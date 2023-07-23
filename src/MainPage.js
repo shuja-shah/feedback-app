@@ -1,6 +1,6 @@
 import { Avatar, Box, Grid, Rating, Typography } from "./Componenets/MUI";
 
-export const fontFamily = "Lato";
+export const fontFamily = "Poppins";
 
 const UpperLeftIllustration = ({ style }) => {
   return (
@@ -198,8 +198,8 @@ const Illustration = ({ params }) => {
   return (
     <Grid
       item
-      xl={6}
-      lg={6}
+      xl={5.5}
+      lg={5.5}
       sx={{
         height: "100%",
         backgroundColor: "#6070FF",
@@ -249,10 +249,10 @@ const FormStack = ({ params }) => {
       justifyContent="center"
       alignItems="center"
       direction="column"
-      xl={6}
-      lg={6}
+      xl={6.5}
+      lg={6.5}
       sx={{
-        backgroundColor: "#efeff5",
+        backgroundColor: "#fff",
         height: "100%",
         position: "relative",
       }}
@@ -309,10 +309,10 @@ const MainPage = ({ params }) => {
       <Grid
         container
         sx={{
-          width: "80%",
+          width: "75%",
           height: "80%",
           borderRadius: "8px",
-          border: "1.5px solid #d9d9d9",
+          //   border: "1.5px solid #d9d9d9",
           flexWrap: "nowrap",
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
         }}
