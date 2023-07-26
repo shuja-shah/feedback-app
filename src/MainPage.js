@@ -13,6 +13,8 @@ import { useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import EmojiRatings from "./Componenets/StyledRating";
+import { CircularProgress } from "@mui/material";
 
 export const fontFamily = "Poppins";
 
