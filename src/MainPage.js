@@ -11,7 +11,8 @@ import {
 } from "./Componenets/MUI";
 import { useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
-
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 export const fontFamily = "Poppins";
 
 const UpperLeftIllustration = ({ style }) => {
