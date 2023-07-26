@@ -8,7 +8,7 @@ export const ENDPOINT = "http://localhost:8888";
 export const getBussniess = createAsyncThunk(
   GET_BUSSNIESS,
   async (thunkAPI) => {
-    const response = await fetch(`${ENDPOINT}/api/contact/list/`, {
+    const response = await fetch(`${ENDPOINT}/api/businesses/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -16,13 +16,13 @@ export const getBussniess = createAsyncThunk(
     });
     const data = await response.json();
     if (!response.ok) {
+      console.log(data, "rejected");
       return thunkAPI.rejectWithValue(data);
     }
+    console.log("succ", data);
     return data;
   }
 );
-
-
 
 export const getOrder = createAsyncThunk(
   GET_BUSSNIESS,
@@ -41,19 +41,19 @@ export const getOrder = createAsyncThunk(
   }
 );
 
-const intialState = {
-  bussniess: null,
+const initialState = {
+  business: [],
   order: null,
   loading: false,
   error: null,
 };
 
-const FdBkConfig_Reducer = (state = intialState, action) => {
+const FdBkConfig_Reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_BUSSNIESS:
       return {
         ...state,
-        bussniess: action.payload,
+        business: action.payload,
       };
 
     case GET_ORDERS:
@@ -63,9 +63,7 @@ const FdBkConfig_Reducer = (state = intialState, action) => {
       };
 
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 };
 

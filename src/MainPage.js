@@ -9,7 +9,7 @@ import {
   Tooltip,
   Typography,
 } from "./Componenets/MUI";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -502,8 +502,27 @@ const FormStack = ({ params }) => {
   );
 };
 
-const MainPage = ({ params }) => {
-  return (
+const MainPage = ({ data, params }) => {
+  const url = new URL(window.location.href);
+  const bu_id = url.searchParams.get("bu_id");
+  const order_id = url.searchParams.get("order_id");
+
+  const [target, setTarget] = useState();
+
+  useEffect(() => {
+    const realTarget = data.find((ele) => Number(ele.id) === Number(bu_id));
+    const realOrder = realTarget?.orders.find(
+      (odr) => Number(odr.id) === Number(order_id)
+    );
+    setTimeout(() => {
+      setTarget({
+        ...realTarget,
+        orders: { ...realOrder },
+      });
+    }, 3600);
+  }, [data]);
+
+  return target ? (
     <Box
       sx={{
         height: "100vh",
@@ -531,6 +550,8 @@ const MainPage = ({ params }) => {
         <Illustration params={params} />
       </Grid>
     </Box>
+  ) : (
+    <PreLoader />
   );
 };
 
