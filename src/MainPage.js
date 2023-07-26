@@ -191,15 +191,15 @@ const LargeCircle = ({ style }) => {
   );
 };
 
-const QuestionCard = ({ questions, params }) => {
-  const currentTarget = {};
+const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
+  const currentTarget = currQ;
   const [score, setScore] = useState(0);
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
         gap: "0.5rem",
         width: "100%",
       }}
@@ -207,8 +207,7 @@ const QuestionCard = ({ questions, params }) => {
       <Typography
         sx={{ m: "1rem 0", fontFamily, fontWeight: "400", color: "#344563" }}
       >
-        {currentTarget?.Question ??
-          "Q:1 On a Scale of one two 5, How would you rate the recent support that we have given you?"}
+        {currentTarget?.Question ?? "no_question"}
       </Typography>
 
       {currentTarget?.question_type === "hearts" ? (
@@ -316,7 +315,7 @@ const QuestionCard = ({ questions, params }) => {
             },
           }}
         >
-          Next
+          {currentQuestion === questions.length ? "Finish" : "Next"}
         </Button>
       </Box>
     </Box>
@@ -369,7 +368,8 @@ const Illustration = ({ params }) => {
   );
 };
 
-const IntroRow = () => {
+const IntroRow = ({ params, currentQuestion }) => {
+  console.log(params);
   return (
     <Box
       sx={{
@@ -387,7 +387,7 @@ const IntroRow = () => {
           alignItems: "flex-start",
         }}
       >
-        <Avatar>L</Avatar>
+        <Avatar src={params?.BU_Logo ?? ""} />
         <Typography
           sx={{
             fontFamily,
@@ -396,7 +396,7 @@ const IntroRow = () => {
             fontSize: "1.1rem",
           }}
         >
-          Liza Web{" "}
+          {params?.BU_Name ?? ""}{" "}
         </Typography>
       </Box>
 
@@ -416,9 +416,13 @@ const IntroRow = () => {
             color: "#091E42",
           }}
         >
-          1 of 6
+          {currentQuestion ? currentQuestion : 1} of{" "}
+          {params?.orders?.questions.length ?? 1}
         </Typography>
-        <ProgressBar />
+        <ProgressBar
+          obt={currentQuestion}
+          total={params.orders.questions.length}
+        />
         <Typography
           sx={{
             fontFamily,
@@ -426,7 +430,7 @@ const IntroRow = () => {
             color: "#344563",
           }}
         >
-          0% Completed
+          {(currentQuestion / params.orders.questions.length) * 100}% Completed
         </Typography>
       </Box>
     </Box>
@@ -434,12 +438,29 @@ const IntroRow = () => {
 };
 
 const FormStack = ({ params }) => {
-  const questions = [];
+  const [questions, setQuestions] = useState([]);
+
+  const [currentQuestion, setCurrentQuestion] = useState(1);
+  const [currQ, setCurrQ] = useState();
+
+  useEffect(() => {
+    const realTarget = params;
+    const realOrder = realTarget?.orders;
+    setQuestions(realOrder?.questions);
+    setCurrQ(realOrder?.questions[0]);
+  }, [params]);
+
+  const handleNext = () => {
+    if (currentQuestion < params.orders.length) {
+      setCurrentQuestion((prev) => prev + 1);
+      setCurrQ(questions[currentQuestion]);
+    }
+  };
+
   return (
     <Grid
       item
       container
-      //   justifyContent="space-between"
       alignItems="center"
       direction="column"
       xl={6}
@@ -451,7 +472,7 @@ const FormStack = ({ params }) => {
         borderRadius: "8px",
       }}
     >
-      <IntroRow />
+      <IntroRow params={params} currentQuestion={currentQuestion} />
       <Box
         sx={{
           width: "90%",
@@ -473,7 +494,12 @@ const FormStack = ({ params }) => {
         >
           {params?.FdBk_Page_Title ?? "Welcome to this Survey"}
         </Typography>
-        <QuestionCard questions={questions} />
+        <QuestionCard
+          questions={questions}
+          currQ={currQ}
+          handleNext={handleNext}
+          currentQuestion={currentQuestion}
+        />
       </Box>
       <UpperLeftIllustration
         style={{
@@ -551,7 +577,7 @@ const MainPage = ({ data, params }) => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <FormStack params={params} />
+        <FormStack params={target} />
         <Illustration params={params} />
       </Grid>
     </Box>

@@ -27,11 +27,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-const ProgressBar = () => {
+const ProgressBar = ({ obt, total }) => {
   return (
     <BorderLinearProgress
       variant="determinate"
-      value={1}
+      value={(obt / total) * 100}
       sx={{ width: "100%" }}
     />
   );
