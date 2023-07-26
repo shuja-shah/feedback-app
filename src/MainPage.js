@@ -531,6 +531,7 @@ const MainPage = ({ data, params }) => {
         background: "#fff",
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: "#e5e5e5",
       }}
     >
       <Grid
