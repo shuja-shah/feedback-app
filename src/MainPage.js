@@ -294,6 +294,7 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
         }}
       >
         <Button
+          onClick={handleNext}
           sx={{
             borderRadius: "8px",
             border: "1px solid #7F8CFF",
@@ -451,7 +452,8 @@ const FormStack = ({ params }) => {
   }, [params]);
 
   const handleNext = () => {
-    if (currentQuestion < params.orders.length) {
+    console.log("Function activated");
+    if (currentQuestion < params.orders.questions.length) {
       setCurrentQuestion((prev) => prev + 1);
       setCurrQ(questions[currentQuestion]);
     }
