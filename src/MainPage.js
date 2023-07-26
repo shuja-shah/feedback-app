@@ -13,7 +13,25 @@ import { useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 export const fontFamily = "Poppins";
+
+const PreLoader = () => (
+  <Box
+    sx={{
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      background: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <CircularProgress
+      sx={{ animation: "spin 2s linear infinite", color: "#711fff" }}
+    />
+  </Box>
+);
 
 const UpperLeftIllustration = ({ style }) => {
   return (
