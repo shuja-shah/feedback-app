@@ -183,15 +183,42 @@ const QuestionCard = ({ questions, params }) => {
         width: "100%",
       }}
     >
-      <Typography sx={{ m: "1rem 0", fontFamily, fontWeight: "400" , color: "#344563",}}>
+      <Typography
+        sx={{ m: "1rem 0", fontFamily, fontWeight: "400", color: "#344563" }}
+      >
         {currentTarget?.Question ??
           "Q:1 On a Scale of one two 5, How would you rate the recent support that we have given you?"}
       </Typography>
 
-      <Rating
-        size="large"
-        sx={{ width: "100%", justifyContent: "space-between" }}
-      />
+      {currentTarget?.question_type === "hearts" ? (
+        <Rating
+          size="large"
+          sx={{ width: "70%", justifyContent: "space-between" }}
+          value={score}
+          onChange={(_, newValue) => {
+            setScore(newValue);
+          }}
+          icon={<FavoriteIcon fontSize="inherit" />}
+          emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+        />
+      ) : currentTarget?.question_type === "emoji" ? (
+        <EmojiRatings
+          value={score}
+          onChange={(_, newValue) => {
+            setScore(newValue);
+          }}
+          sx={{ width: "70%", justifyContent: "space-between" }}
+        />
+      ) : (
+        <Rating
+          size="large"
+          sx={{ width: "70%", justifyContent: "space-between" }}
+          value={score}
+          onChange={(_, newValue) => {
+            setScore(newValue);
+          }}
+        />
+      )}
       <Box
         sx={{
           display: "flex",
