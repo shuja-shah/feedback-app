@@ -510,6 +510,10 @@ const MainPage = ({ data, params }) => {
   const [target, setTarget] = useState();
 
   useEffect(() => {
+    console.log(target, "Target");
+  }, [target]);
+
+  useEffect(() => {
     const realTarget = data.find((ele) => Number(ele.id) === Number(bu_id));
     const realOrder = realTarget?.orders.find(
       (odr) => Number(odr.id) === Number(order_id)
@@ -522,7 +526,7 @@ const MainPage = ({ data, params }) => {
     }, 3600);
   }, [data]);
 
-  return target ? (
+  return target && "id" in target.orders ? (
     <Box
       sx={{
         height: "100vh",
