@@ -15,6 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import EmojiRatings from "./Componenets/StyledRating";
 import { CircularProgress } from "@mui/material";
+import Logo from "./_assets/123.jpg";
 
 export const fontFamily = "Poppins";
 
@@ -213,7 +214,7 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
       {currentTarget?.question_type === "hearts" ? (
         <Rating
           size="large"
-          sx={{ width: "70%", justifyContent: "space-between" }}
+          sx={{ width: "70%" }}
           value={score}
           onChange={(_, newValue) => {
             setScore(newValue);
@@ -227,7 +228,7 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
           onChange={(_, newValue) => {
             setScore(newValue);
           }}
-          sx={{ width: "70%", justifyContent: "space-between" }}
+          sx={{ width: "70%" }}
         />
       ) : (
         <Rating
@@ -241,83 +242,99 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
       )}
       <Box
         sx={{
-          display: "flex",
-          gap: "1rem",
-          alignItems: "center",
           width: "100%",
-          justifyContent: "flex-start",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+
+          transition: "all 0.5s ease-in-out",
+          opacity: score ? 1 : 0,
         }}
       >
-        <Typography
+        <Box
           sx={{
-            fontFamily,
-            fontWeight: "500",
-            color: "#091E42",
-            fontSize: "0.9rem",
+            display: "flex",
+            gap: "1rem",
+            alignItems: "center",
+            width: "100%",
+            justifyContent: "flex-start",
           }}
         >
-          Follow up Question
-        </Typography>
-        <Tooltip title="Provide more details on why you choose this rating">
-          <InfoIcon
+          <Typography
             sx={{
-              cursor: "pointer",
-              fill: "#6070FF",
+              fontFamily,
+              fontWeight: "500",
+              color: "#091E42",
+              fontSize: "0.9rem",
             }}
-          />
-        </Tooltip>
-      </Box>
+          >
+            Follow up Question
+          </Typography>
+          <Tooltip title="Provide more details on why you choose this rating">
+            <InfoIcon
+              sx={{
+                cursor: "pointer",
+                fill: "#6070FF",
+              }}
+            />
+          </Tooltip>
+        </Box>
 
-      <TextField
-        sx={{
-          width: "100%",
-          "& .MuiOutlinedInput-root": {
-            borderRadius: "8px",
-
-            "&:hover fieldset": {
-              borderColor: "#6070FF",
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "#6070FF",
-            },
-          },
-        }}
-        multiline
-        rows={3}
-      />
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-        }}
-      >
-        <Button
-          onClick={handleNext}
+        <TextField
           sx={{
-            borderRadius: "8px",
-            border: "1px solid #7F8CFF",
-            background: "#FFF",
-            transition: "all 0.3s ease-in-out",
-            fontFamily,
-            cursor: "pointer",
-            color: "7F8CFF",
+            width: "100%",
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "8px",
 
-            "&:hover": {
-              background: "#2230D2",
-              color: "#fff",
-              fontWeight: "600",
-            },
-            "&:active": {
-              background: "#2230D2",
-              color: "#fff",
-              fontWeight: "600",
+              "&:hover fieldset": {
+                borderColor: "#6070FF",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#6070FF",
+              },
             },
           }}
+          multiline
+          rows={3}
+        />
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
         >
-          {currentQuestion === questions.length ? "Finish" : "Next"}
-        </Button>
+          <Button
+            onClick={(e) => {
+              handleNext(e);
+              setScore(0);
+            }}
+            sx={{
+              borderRadius: "8px",
+              border: "1px solid #7F8CFF",
+              background: "#FFF",
+              transition: "all 0.3s ease-in-out",
+              fontFamily,
+              cursor: "pointer",
+              color: "7F8CFF",
+
+              "&:hover": {
+                background: "#2230D2",
+                color: "#fff",
+                fontWeight: "600",
+              },
+              "&:active": {
+                background: "#2230D2",
+                color: "#fff",
+                fontWeight: "600",
+              },
+            }}
+          >
+            {currentQuestion === questions.length ? "Finish" : "Next"}
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
@@ -334,6 +351,8 @@ const Illustration = ({ params }) => {
         backgroundColor: "#6070FF",
         borderRadius: "8px",
         position: "relative",
+        borderTopLeftRadius: "0px",
+        borderBottomLeftRadius: "0px",
       }}
     >
       <RightSideIllustration
@@ -370,7 +389,6 @@ const Illustration = ({ params }) => {
 };
 
 const IntroRow = ({ params, currentQuestion }) => {
-  console.log(params);
   return (
     <Box
       sx={{
@@ -388,7 +406,7 @@ const IntroRow = ({ params, currentQuestion }) => {
           alignItems: "flex-start",
         }}
       >
-        <Avatar src={params?.BU_Logo ?? ""} />
+        <Avatar src={Logo} />
         <Typography
           sx={{
             fontFamily,
@@ -438,7 +456,7 @@ const IntroRow = ({ params, currentQuestion }) => {
   );
 };
 
-const FormStack = ({ params }) => {
+const FormStack = ({ params, isFinished, setIsFinished }) => {
   const [questions, setQuestions] = useState([]);
 
   const [currentQuestion, setCurrentQuestion] = useState(1);
@@ -452,10 +470,13 @@ const FormStack = ({ params }) => {
   }, [params]);
 
   const handleNext = () => {
-    console.log("Function activated");
     if (currentQuestion < params.orders.questions.length) {
       setCurrentQuestion((prev) => prev + 1);
       setCurrQ(questions[currentQuestion]);
+    }
+
+    if (currentQuestion === params.orders.questions.length) {
+      setIsFinished(true);
     }
   };
 
@@ -465,44 +486,76 @@ const FormStack = ({ params }) => {
       container
       alignItems="center"
       direction="column"
-      xl={6}
-      lg={6}
+      xl={isFinished ? 12 : 6}
+      lg={isFinished ? 12 : 6}
       sx={{
         backgroundColor: "#fff",
         height: "100%",
         position: "relative",
         borderRadius: "8px",
+        transition: "all 0.5s ease-in-out",
       }}
     >
-      <IntroRow params={params} currentQuestion={currentQuestion} />
-      <Box
-        sx={{
-          width: "90%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          margin: "110px 0 0 0",
-          //   height: "100%",
-        }}
-      >
-        <Typography
+      {!isFinished ? (
+        <>
+          <IntroRow params={params} currentQuestion={currentQuestion} />
+          <Box
+            sx={{
+              width: "90%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "center",
+              margin: "110px 0 0 0",
+
+              //   height: "100%",
+            }}
+          >
+            <Typography
+              sx={{
+                fontFamily,
+                fontWeight: "600",
+                fontSize: "1.1rem",
+                color: "#091E42",
+              }}
+            >
+              {params?.FdBk_Page_Title ?? "Welcome to this Survey"}
+            </Typography>
+            <QuestionCard
+              questions={questions}
+              currQ={currQ}
+              handleNext={handleNext}
+              currentQuestion={currentQuestion}
+            />
+          </Box>
+        </>
+      ) : (
+        <Box
           sx={{
-            fontFamily,
-            fontWeight: "600",
-            fontSize: "1.1rem",
-            color: "#091E42",
+            width: "100%",
+            height: "100%",
+            background: "#6070FF",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "8px",
+            borderTopRightRadius: "0px",
+            borderBottomRightRadius: "0px",
+            transition: "all 0.7s ease-in-out",
           }}
         >
-          {params?.FdBk_Page_Title ?? "Welcome to this Survey"}
-        </Typography>
-        <QuestionCard
-          questions={questions}
-          currQ={currQ}
-          handleNext={handleNext}
-          currentQuestion={currentQuestion}
-        />
-      </Box>
+          <Typography
+            sx={{
+              fontFamily,
+              fontWeight: "600",
+              fontSize: "1.2rem",
+              color: "#fff",
+            }}
+          >
+            Thank you for your feedback!
+          </Typography>
+        </Box>
+      )}
       <UpperLeftIllustration
         style={{
           position: "absolute",
@@ -534,7 +587,7 @@ const MainPage = ({ data, params }) => {
   const url = new URL(window.location.href);
   const bu_id = url.searchParams.get("bu_id");
   const order_id = url.searchParams.get("order_id");
-
+  const [isFinished, setIsFinished] = useState(false);
   const [target, setTarget] = useState();
 
   useEffect(() => {
@@ -579,8 +632,12 @@ const MainPage = ({ data, params }) => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <FormStack params={target} />
-        <Illustration params={params} />
+        <FormStack
+          params={target}
+          isFinished={isFinished}
+          setIsFinished={setIsFinished}
+        />
+        {!isFinished && <Illustration params={params} />}
       </Grid>
     </Box>
   ) : (
