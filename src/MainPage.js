@@ -15,7 +15,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import EmojiRatings from "./Componenets/StyledRating";
 import { CircularProgress } from "@mui/material";
-import Logo from "./_assets/123.jpg";
+import Logo from "./_assets/Check1.jpg";
+import NotFound from "./_assets/NotFound.png";
 
 export const fontFamily = "Poppins";
 
@@ -346,6 +347,9 @@ const Illustration = ({ params }) => {
       item
       xl={6}
       lg={6}
+      md={6}
+      sm={5}
+      xs={0}
       sx={{
         height: "100%",
         backgroundColor: "#6070FF",
@@ -353,6 +357,13 @@ const Illustration = ({ params }) => {
         position: "relative",
         borderTopLeftRadius: "0px",
         borderBottomLeftRadius: "0px",
+        display: {
+          xl: "block",
+          lg: "block",
+          md: "block",
+          sm: "block",
+          xs: "none",
+        },
       }}
     >
       <RightSideIllustration
@@ -406,15 +417,7 @@ const IntroRow = ({ params, currentQuestion }) => {
           alignItems: "flex-start",
         }}
       >
-        {/* <Avatar src={Logo} /> 
-        
-        we need to have div with the following dimensions w100 h100,
-        Then we need the params.BU_Logo to be the background of it.
-        The div should support all kinds of logo wether circualr or rectangular
-        */}
-        
         <div
-
           style={{
             width: "100px",
             height: "100px",
@@ -424,7 +427,7 @@ const IntroRow = ({ params, currentQuestion }) => {
             backgroundPosition: "center",
             borderRadius: "50%",
           }}
-          />
+        />
 
         <Typography
           sx={{
@@ -488,6 +491,12 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
     setCurrQ(realOrder?.questions[0]);
   }, [params]);
 
+  useEffect(() => {
+    if (params?.orders?.feedback_completed) {
+      setIsFinished(true);
+    }
+  }, [params]);
+
   const handleNext = () => {
     if (currentQuestion < params.orders.questions.length) {
       setCurrentQuestion((prev) => prev + 1);
@@ -507,6 +516,8 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
       direction="column"
       xl={isFinished ? 12 : 6}
       lg={isFinished ? 12 : 6}
+      xs={12}
+      sm={7}
       sx={{
         backgroundColor: "#fff",
         height: "100%",
@@ -553,7 +564,7 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
           sx={{
             width: "100%",
             height: "100%",
-            background: "#6070FF",
+            background: "#fff",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -563,16 +574,69 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
             transition: "all 0.7s ease-in-out",
           }}
         >
-          <Typography
+          <Box
             sx={{
-              fontFamily,
-              fontWeight: "600",
-              fontSize: "1.2rem",
-              color: "#fff",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            Thank you for your feedback!
-          </Typography>
+            <Tooltip title="Your average Score">
+              <Rating
+                value={3.5}
+                readOnly
+                sx={{
+                  fontSize: "3rem",
+                }}
+                precision={0.5}
+              />
+            </Tooltip>
+            <Typography
+              sx={{
+                fontFamily,
+                fontWeight: "600",
+                fontSize: "2rem",
+                color: "#091E42",
+              }}
+            >
+              Thank you for your feedback!
+            </Typography>
+            <Typography
+              sx={{
+                fontFamily,
+                fontWeight: "400",
+                fontSize: "1.5rem",
+                color: "#344563",
+              }}
+            >
+              We appericiate your time and effort
+            </Typography>
+            <Button
+              sx={{
+                my: "1rem",
+                borderRadius: "8px",
+                border: "1px solid #7F8CFF",
+                background: "#FFF",
+                transition: "all 0.3s ease-in-out",
+                fontFamily,
+                cursor: "pointer",
+                color: "7F8CFF",
+
+                "&:hover": {
+                  background: "#2230D2",
+                  color: "#fff",
+                  fontWeight: "600",
+                },
+                "&:active": {
+                  background: "#2230D2",
+                  color: "#fff",
+                  fontWeight: "600",
+                },
+              }}
+            >
+              Go to Dashboard
+            </Button>
+          </Box>
         </Box>
       )}
       <UpperLeftIllustration
@@ -602,12 +666,62 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
   );
 };
 
+const PageNotFound = () => {
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        height: "100%",
+        background: "#fff",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: "8px",
+        borderTopRightRadius: "0px",
+        borderBottomRightRadius: "0px",
+        transition: "all 0.7s ease-in-out",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <img src={NotFound} alt="not found" />
+        <Typography
+          sx={{
+            fontFamily,
+            fontWeight: "600",
+            fontSize: "2rem",
+            color: "#091E42",
+          }}
+        >
+          Oops!
+        </Typography>
+        <Typography
+          sx={{
+            fontFamily,
+            fontWeight: "400",
+            fontSize: "1.5rem",
+            color: "#344563",
+          }}
+        >
+          We couldn't find the order you are looking for
+        </Typography>
+      </Box>
+    </Box>
+  );
+};
+
 const MainPage = ({ data, params }) => {
   const url = new URL(window.location.href);
   const bu_id = url.searchParams.get("bu_id");
   const order_id = url.searchParams.get("order_id");
   const [isFinished, setIsFinished] = useState(false);
   const [target, setTarget] = useState();
+  const [orderFound, setOrderFound] = useState(true);
 
   useEffect(() => {
     console.log(target, "Target");
@@ -618,12 +732,18 @@ const MainPage = ({ data, params }) => {
     const realOrder = realTarget?.orders.find(
       (odr) => Number(odr.id) === Number(order_id)
     );
-    setTimeout(() => {
-      setTarget({
-        ...realTarget,
-        orders: { ...realOrder },
-      });
-    }, 3600);
+    if (!realOrder) {
+      setTimeout(() => {
+        setOrderFound(false);
+      }, 5000);
+    } else {
+      setTimeout(() => {
+        setTarget({
+          ...realTarget,
+          orders: { ...realOrder },
+        });
+      }, 3600);
+    }
   }, [data]);
 
   return target && "id" in target.orders ? (
@@ -634,15 +754,21 @@ const MainPage = ({ data, params }) => {
         flexDirection: "column",
         background: "#fff",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: {
+          xl: "center",
+          lg: "center",
+          md: "center",
+          sm: "center",
+          xs: null,
+        },
         backgroundColor: "#e5e5e5",
       }}
     >
       <Grid
         container
         sx={{
-          width: "75%",
-          height: "80%",
+          width: { xl: "75%", lg: "75%", md: "85%", sm: "90%", xs: "100%" },
+          height: { xl: "80%", lg: "80%", md: "85%", sm: "85%", xs: "100%" },
           borderRadius: "8px",
           //   border: "1.5px solid #d9d9d9",
           flexWrap: "nowrap",
@@ -659,8 +785,28 @@ const MainPage = ({ data, params }) => {
         {!isFinished && <Illustration params={params} />}
       </Grid>
     </Box>
-  ) : (
+  ) : orderFound ? (
     <PreLoader />
+  ) : (
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        background: "#fff",
+        alignItems: "center",
+        justifyContent: {
+          xl: "center",
+          lg: "center",
+          md: "center",
+          sm: "center",
+          xs: null,
+        },
+        backgroundColor: "#e5e5e5",
+      }}
+    >
+      <PageNotFound />
+    </Box>
   );
 };
 
