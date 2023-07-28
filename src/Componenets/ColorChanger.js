@@ -63,9 +63,23 @@ function hslToHex(h, s, l) {
     .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
 
-function makeColorLighter(hexColor) {
+function makeColorLighter(hexColor, alphaReduction) {
+  if (!alphaReduction || alphaReduction < 0 || alphaReduction > 1) {
+    alphaReduction = 0;
+  }
+
   const hslColor = hexToHSL(hexColor);
   hslColor.l = Math.max(0, hslColor.l - 0.2);
-  return hslToHex(hslColor.h, hslColor.s, hslColor.l);
+  hslColor.a = Math.max(0, hslColor.a - alphaReduction);
+
+  return hslToHex(hslColor.h, hslColor.s, hslColor.l, hslColor.a);
 }
+
+function checkHex(sample) {
+  const pattern = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+  if (typeof sample !== "string") return false;
+  return pattern.test(sample);
+}
+export { checkHex };
+
 export default makeColorLighter;

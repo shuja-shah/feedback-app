@@ -27,12 +27,26 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-const ProgressBar = ({ obt, total }) => {
+const ProgressBar = ({ obt, total, theme }) => {
+  const primaryColor = theme.primaryColor;
+  /* pass the primaryColor to BorderLinearProgess */
+
   return (
-    <BorderLinearProgress
+    <LinearProgress
       variant="determinate"
       value={(obt / total) * 100}
-      sx={{ width: "100%" }}
+      sx={{
+        height: 10,
+        borderRadius: 5,
+        [`&.${linearProgressClasses.colorPrimary}`]: {
+          backgroundColor: "#f1f3f5",
+        },
+        [`& .${linearProgressClasses.bar}`]: {
+          borderRadius: 5,
+          backgroundColor: theme.primaryColor,
+        },
+        width: "100%",
+      }}
     />
   );
 };

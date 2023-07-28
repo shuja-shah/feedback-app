@@ -55,7 +55,7 @@ export default function EmojiRatings({ value, onChange }) {
       getLabelText={(value) => customIcons[value].label}
       highlightSelectedOnly
       size="large"
-      sx={{ width: "70%",  }}
+      sx={{ width: "70%" }}
       value={value}
       onChange={onChange}
     />
