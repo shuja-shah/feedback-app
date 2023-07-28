@@ -406,7 +406,26 @@ const IntroRow = ({ params, currentQuestion }) => {
           alignItems: "flex-start",
         }}
       >
-        <Avatar src={Logo} />
+        {/* <Avatar src={Logo} /> 
+        
+        we need to have div with the following dimensions w100 h100,
+        Then we need the params.BU_Logo to be the background of it.
+        The div should support all kinds of logo wether circualr or rectangular
+        */}
+        
+        <div
+
+          style={{
+            width: "100px",
+            height: "100px",
+            backgroundImage: `url(${params?.BU_Logo})`,
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            borderRadius: "50%",
+          }}
+          />
+
         <Typography
           sx={{
             fontFamily,

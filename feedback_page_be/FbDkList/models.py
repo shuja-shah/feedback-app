@@ -26,7 +26,6 @@ class FdBkConfig(models.Model):
     )  # New field added for last image
 
 
-
 class FdBkQuestions(models.Model):
     # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     Question = models.TextField()
@@ -74,14 +73,21 @@ class Order(models.Model):
         FdBkConfig, on_delete=models.CASCADE, related_name="orders"
     )
     questions = models.ManyToManyField(FdBkQuestions)
+    feedback_completed = models.BooleanField(default=False)
 
+    def all_questions_feedback_completed(self):
+        for question in self.questions.all():
+            if not Feedback.objects.filter(question=question, order=self).exists():
+                return False
+        return True
 
 
 class Feedback(models.Model):
-    Question = models.TextField()
+    # Question = models.TextField()
     Rating = models.IntegerField()
     Comment = models.TextField(blank=True, null=True)
     question = models.ForeignKey(FdBkQuestions, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return f"Feedback {self.Id}: {self.Question}"
+        return f"Feedback {self.id}: {self.question}"
