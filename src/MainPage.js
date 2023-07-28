@@ -16,6 +16,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import EmojiRatings from "./Componenets/StyledRating";
 import { CircularProgress } from "@mui/material";
 import Logo from "./_assets/Check1.jpg";
+import Check2 from "./_assets/Check2.png";
+import Check3 from "./_assets/Check3.jpg";
 import NotFound from "./_assets/NotFound.png";
 
 export const fontFamily = "Poppins";
@@ -193,7 +195,13 @@ const LargeCircle = ({ style }) => {
   );
 };
 
-const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
+const QuestionCard = ({
+  questions,
+  currQ,
+  handleNext,
+  currentQuestion,
+  handleBack,
+}) => {
   const currentTarget = currQ;
   const [score, setScore] = useState(0);
   return (
@@ -202,12 +210,19 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        gap: "0.5rem",
+        // gap: "0.5rem",
+        my: "1rem",
         width: "100%",
       }}
     >
       <Typography
-        sx={{ m: "1rem 0", fontFamily, fontWeight: "400", color: "#344563" }}
+        sx={{
+          // m: "1rem 0",
+          fontFamily,
+          fontWeight: "600",
+          color: "#344563",
+          fontSize: "1.2rem",
+        }}
       >
         {currentTarget?.Question ?? "no_question"}
       </Typography>
@@ -215,7 +230,11 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
       {currentTarget?.question_type === "hearts" ? (
         <Rating
           size="large"
-          sx={{ width: "70%" }}
+          sx={{
+            width: "70%",
+            fontSize: "2.6rem",
+            justifyContent: "space-between",
+          }}
           value={score}
           onChange={(_, newValue) => {
             setScore(newValue);
@@ -229,12 +248,20 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
           onChange={(_, newValue) => {
             setScore(newValue);
           }}
-          sx={{ width: "70%" }}
+          sx={{
+            width: "70%",
+            fontSize: "2.6rem",
+            justifyContent: "space-between",
+          }}
         />
       ) : (
         <Rating
           size="large"
-          sx={{ width: "70%", justifyContent: "space-between" }}
+          sx={{
+            width: "70%",
+            justifyContent: "space-between",
+            fontSize: "2.6rem",
+          }}
           value={score}
           onChange={(_, newValue) => {
             setScore(newValue);
@@ -247,12 +274,32 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          gap: "0.5rem",
+          // gap: "0.5rem",
 
           transition: "all 0.5s ease-in-out",
           opacity: score ? 1 : 0,
         }}
       >
+        <Typography
+          sx={{
+            fontFamily,
+            fontWeight: "400",
+            color: "#091E42",
+            fontSize: "1rem",
+          }}
+        >
+          {score === 1
+            ? currentTarget.Score_1_Display_Message
+            : score === 2
+            ? currentTarget.Score_2_Display_Message
+            : score === 3
+            ? currentTarget.Score_3_Display_Message
+            : score === 4
+            ? currentTarget.Score_4_Display_Message
+            : score === 5
+            ? currentTarget.Score_5_Display_Message
+            : null}
+        </Typography>
         <Box
           sx={{
             display: "flex",
@@ -265,12 +312,22 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
           <Typography
             sx={{
               fontFamily,
-              fontWeight: "500",
+              fontWeight: "600",
               color: "#091E42",
-              fontSize: "0.9rem",
+              fontSize: "1rem",
             }}
           >
-            Follow up Question
+            {score === 1
+              ? currentTarget.Score_1_FollowUp_Question
+              : score === 2
+              ? currentTarget.Score_2_FollowUp_Question
+              : score === 3
+              ? currentTarget.Score_3_FollowUp_Question
+              : score === 4
+              ? currentTarget.Score_4_FollowUp_Question
+              : score === 5
+              ? currentTarget.Score_5_FollowUp_Question
+              : null}
           </Typography>
           <Tooltip title="Provide more details on why you choose this rating">
             <InfoIcon
@@ -299,17 +356,20 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
           multiline
           rows={3}
         />
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
-        >
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: currentQuestion > 1 ? "space-between" : "flex-end",
+          alignItems: "center",
+          my: "1rem",
+        }}
+      >
+        {currentQuestion > 1 && (
           <Button
             onClick={(e) => {
-              handleNext(e);
+              handleBack(e);
               setScore(0);
             }}
             sx={{
@@ -333,9 +393,38 @@ const QuestionCard = ({ questions, currQ, handleNext, currentQuestion }) => {
               },
             }}
           >
-            {currentQuestion === questions.length ? "Finish" : "Next"}
+            Back
           </Button>
-        </Box>
+        )}
+
+        <Button
+          onClick={(e) => {
+            handleNext(e);
+            setScore(0);
+          }}
+          sx={{
+            borderRadius: "8px",
+            border: "1px solid #7F8CFF",
+            background: "#FFF",
+            transition: "all 0.3s ease-in-out",
+            fontFamily,
+            cursor: "pointer",
+            color: "7F8CFF",
+
+            "&:hover": {
+              background: "#2230D2",
+              color: "#fff",
+              fontWeight: "600",
+            },
+            "&:active": {
+              background: "#2230D2",
+              color: "#fff",
+              fontWeight: "600",
+            },
+          }}
+        >
+          {currentQuestion === questions.length ? "Finish" : "Next"}
+        </Button>
       </Box>
     </Box>
   );
@@ -403,11 +492,11 @@ const IntroRow = ({ params, currentQuestion }) => {
   return (
     <Box
       sx={{
-        width: "90%",
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        p: "0.88rem 0",
+        p: "0.88rem",
       }}
     >
       <Box
@@ -421,15 +510,19 @@ const IntroRow = ({ params, currentQuestion }) => {
           style={{
             width: "100px",
             height: "100px",
-            backgroundImage: `url(${params?.BU_Logo})`,
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            borderRadius: "50%",
           }}
-        />
-
-        <Typography
+        >
+          <img
+            // src={params?.BU_Logo}
+            src={Check3}
+            alt="logo"
+            style={{
+              width: "auto",
+              height: "120px",
+            }}
+          />
+        </div>
+        {/* <Typography
           sx={{
             fontFamily,
             fontWeight: "600",
@@ -438,7 +531,7 @@ const IntroRow = ({ params, currentQuestion }) => {
           }}
         >
           {params?.BU_Name ?? ""}{" "}
-        </Typography>
+        </Typography> */}
       </Box>
 
       <Box
@@ -497,7 +590,7 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
     }
   }, [params]);
 
-  const handleNext = () => {
+  const handleNext = (_) => {
     if (currentQuestion < params.orders.questions.length) {
       setCurrentQuestion((prev) => prev + 1);
       setCurrQ(questions[currentQuestion]);
@@ -505,6 +598,13 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
 
     if (currentQuestion === params.orders.questions.length) {
       setIsFinished(true);
+    }
+  };
+
+  const handleBack = (_) => {
+    if (currentQuestion > 1) {
+      setCurrentQuestion((prev) => prev - 1);
+      setCurrQ(questions[currentQuestion - 2]);
     }
   };
 
@@ -536,7 +636,7 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
               flexDirection: "column",
               alignItems: "flex-start",
               justifyContent: "center",
-              margin: "110px 0 0 0",
+              margin: "130px 0 0 0",
 
               //   height: "100%",
             }}
@@ -545,17 +645,28 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
               sx={{
                 fontFamily,
                 fontWeight: "600",
-                fontSize: "1.1rem",
+                fontSize: "1.3rem",
                 color: "#091E42",
               }}
             >
               {params?.FdBk_Page_Title ?? "Welcome to this Survey"}
+            </Typography>
+            <Typography
+              sx={{
+                fontFamily,
+                fontWeight: "400",
+                fontSize: "1.1rem",
+                color: "#344563",
+              }}
+            >
+              {params?.FdBk_Page_SubTitle ?? "Thank you for your time"}
             </Typography>
             <QuestionCard
               questions={questions}
               currQ={currQ}
               handleNext={handleNext}
               currentQuestion={currentQuestion}
+              handleBack={handleBack}
             />
           </Box>
         </>
@@ -634,7 +745,7 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
                 },
               }}
             >
-              Go to Dashboard
+              Let&apos;s Roll!
             </Button>
           </Box>
         </Box>
@@ -642,7 +753,7 @@ const FormStack = ({ params, isFinished, setIsFinished }) => {
       <UpperLeftIllustration
         style={{
           position: "absolute",
-          top: "12%",
+          top: "17%",
           left: "4%",
         }}
       />
