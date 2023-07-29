@@ -217,9 +217,16 @@ const QuestionCard = ({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        // gap: "0.5rem",
+        gap: "10px",
         my: "1rem",
         width: "100%",
+        padding: {
+          xs: "0 1rem",
+          sm: "0 0",
+          md: "0 0",
+          lg: "0 0",
+          xl: "0 0",
+        },
       }}
     >
       <Typography
@@ -234,47 +241,72 @@ const QuestionCard = ({
         {currentTarget?.Question ?? "no_question"}
       </Typography>
 
-      {currentTarget?.question_type === "hearts" ? (
-        <Rating
-          size="large"
-          sx={{
-            width: "70%",
-            fontSize: "2.6rem",
-            justifyContent: "space-between",
-          }}
-          value={score}
-          onChange={(_, newValue) => {
-            setScore(newValue);
-          }}
-          icon={<FavoriteIcon fontSize="inherit" />}
-          emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-        />
-      ) : currentTarget?.question_type === "emoji" ? (
-        <EmojiRatings
-          value={score}
-          onChange={(_, newValue) => {
-            setScore(newValue);
-          }}
-          sx={{
-            width: "70%",
-            fontSize: "2.6rem",
-            justifyContent: "space-between",
-          }}
-        />
-      ) : (
-        <Rating
-          size="large"
-          sx={{
-            width: "70%",
-            justifyContent: "space-between",
-            fontSize: "2.6rem",
-          }}
-          value={score}
-          onChange={(_, newValue) => {
-            setScore(newValue);
-          }}
-        />
-      )}
+      <Box sx={{ width: "100%", display: "flex", gap: "1rem" }}>
+        <>
+          {" "}
+          {currentTarget?.question_type === "hearts" ? (
+            <Rating
+              size="large"
+              sx={{
+                width: "70%",
+                fontSize: "2.6rem",
+                justifyContent: "space-between",
+              }}
+              value={score}
+              onChange={(_, newValue) => {
+                setScore(newValue);
+              }}
+              icon={<FavoriteIcon fontSize="inherit" />}
+              emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+            />
+          ) : currentTarget?.question_type === "emoji" ? (
+            <EmojiRatings
+              value={score}
+              onChange={(_, newValue) => {
+                setScore(newValue);
+              }}
+              sx={{
+                width: "70%",
+                fontSize: "2.6rem",
+                justifyContent: "space-between",
+              }}
+            />
+          ) : (
+            <Rating
+              size="large"
+              sx={{
+                width: "70%",
+                justifyContent: "space-between",
+                fontSize: "2.6rem",
+              }}
+              value={score}
+              onChange={(_, newValue) => {
+                setScore(newValue);
+              }}
+            />
+          )}
+          <Typography
+            sx={{
+              fontFamily,
+              fontWeight: "600",
+              color: "#344563",
+              fontSize: "1.5rem",
+            }}
+          >
+            {score === 1
+              ? currentTarget.Score_1_Feeling
+              : score === 2
+              ? currentTarget.Score_2_Feeling
+              : score === 3
+              ? currentTarget.Score_3_Feeling
+              : score === 4
+              ? currentTarget.Score_4_Feeling
+              : score === 5
+              ? currentTarget.Score_5_Feeling
+              : ""}
+          </Typography>
+        </>
+      </Box>
       <Box
         sx={{
           width: "100%",
@@ -980,7 +1012,7 @@ const MainPage = ({ data, params }) => {
         container
         sx={{
           width: { xl: "75%", lg: "75%", md: "85%", sm: "90%", xs: "100%" },
-          height: { xl: "80%", lg: "80%", md: "85%", sm: "85%", xs: "100%" },
+          height: { xl: "80%", lg: "80%", md: "85%", sm: "85%", xs: "89%" },
           borderRadius: "8px",
           //   border: "1.5px solid #d9d9d9",
           flexWrap: "nowrap",
@@ -1006,8 +1038,8 @@ const MainPage = ({ data, params }) => {
           flexDirection: "column",
           alignItems: "flex-end",
           justifyContent: "center",
-          right: "2%",
-          bottom: "2%",
+          right: { xl: "45%", lg: "40%", md: "35%", sm: "35%", xs: "30%" },
+          bottom: "1%",
         }}
       >
         <Typography
