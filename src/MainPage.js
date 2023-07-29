@@ -853,7 +853,7 @@ const FormStack = ({
       <BottomLeftIllustration
         style={{
           position: "absolute",
-          bottom: "7%",
+          bottom: "4%",
           left: "4%",
         }}
         theme={theme}
