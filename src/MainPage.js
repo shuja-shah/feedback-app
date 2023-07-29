@@ -20,6 +20,7 @@ import NotFound from "./_assets/NotFound.png";
 import makeColorLighter, { checkHex } from "./Componenets/ColorChanger";
 import getFontColorBasedOnColor from "./Componenets/FontBaseColor";
 import uuid from "react-uuid";
+import { ENDPOINT } from "./redux/orders";
 
 export const fontFamily = "Poppins";
 
@@ -204,10 +205,12 @@ const QuestionCard = ({
   handleBack,
   theme,
   feedback,
-  setFeedback
+  setFeedback,
 }) => {
   const currentTarget = currQ;
   const [score, setScore] = useState(0);
+  const [comment, setComment] = useState("");
+
   return (
     <Box
       sx={{
@@ -289,7 +292,7 @@ const QuestionCard = ({
             fontFamily,
             fontWeight: "400",
             color: "#091E42",
-            fontSize: "1rem",
+            fontSize: "1.2rem",
           }}
         >
           {score === 1
@@ -318,7 +321,7 @@ const QuestionCard = ({
               fontFamily,
               fontWeight: "600",
               color: "#091E42",
-              fontSize: "1rem",
+              fontSize: "1.2rem",
             }}
           >
             {score === 1
@@ -356,6 +359,10 @@ const QuestionCard = ({
                 borderColor: theme.primaryColor,
               },
             },
+          }}
+          value={comment}
+          onChange={(e) => {
+            setComment(e.target.value);
           }}
           multiline
           rows={3}
@@ -403,8 +410,22 @@ const QuestionCard = ({
 
         <Button
           onClick={(e) => {
+            e.preventDefault();
+            setFeedback((prev) => {
+              const shallowCopy = prev.map((item) => ({ ...item }));
+              const index = shallowCopy.findIndex(
+                (ele) => Number(ele.question) === Number(currentTarget.id)
+              );
+              if (index !== -1) {
+                shallowCopy[index].Rating = score;
+                shallowCopy[index].Comment = comment;
+                return shallowCopy;
+              }
+              return shallowCopy;
+            });
             handleNext(e);
             setScore(0);
+            setComment("");
           }}
           sx={{
             borderRadius: "8px",
@@ -615,14 +636,37 @@ const FormStack = ({
     }
   }, [params]);
 
-  const handleNext = (_) => {
+  const handleNext = async (_) => {
     if (currentQuestion < params.orders.questions.length) {
       setCurrentQuestion((prev) => prev + 1);
       setCurrQ(questions[currentQuestion]);
     }
 
     if (currentQuestion === params.orders.questions.length) {
-      setIsFinished(true);
+      feedback.forEach(async (item, index) => {
+        const res = await fetch(`${ENDPOINT}/api/feedback/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(item),
+        });
+        if (index === feedback.length - 1) {
+          const res2 = await fetch(
+            `${ENDPOINT}/api/orders/${params.orders.id}/update/`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ feedback_completed: true }),
+            }
+          );
+          if (res2.status === 200) {
+            setIsFinished(true);
+          }
+        }
+      });
     }
   };
 
@@ -632,6 +676,12 @@ const FormStack = ({
       setCurrQ(questions[currentQuestion - 2]);
     }
   };
+
+  const [avg, setAvg] = useState(0);
+  useEffect(() => {
+    const sum = feedback.reduce((acc, curr) => acc + curr.Rating, 0);
+    setAvg(sum / feedback.length);
+  }, [feedback]);
 
   return (
     <Grid
@@ -660,12 +710,12 @@ const FormStack = ({
           />
           <Box
             sx={{
-              width: "90%",
+              width: { xl: "80%", lg: "85%", md: "80%", sm: "90%" },
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-start",
               justifyContent: "center",
-              margin: "130px 0 0 0",
+              margin: "110px 0 0 0",
 
               //   height: "100%",
             }}
@@ -674,7 +724,7 @@ const FormStack = ({
               sx={{
                 fontFamily,
                 fontWeight: "600",
-                fontSize: "1.3rem",
+                fontSize: "1.6rem",
                 color: "#091E42",
               }}
             >
@@ -684,7 +734,7 @@ const FormStack = ({
               sx={{
                 fontFamily,
                 fontWeight: "400",
-                fontSize: "1.1rem",
+                fontSize: "1.4rem",
                 color: "#344563",
               }}
             >
@@ -726,7 +776,7 @@ const FormStack = ({
           >
             <Tooltip title="Your average Score">
               <Rating
-                value={3.5}
+                value={avg}
                 readOnly
                 sx={{
                   fontSize: "3rem",
@@ -752,7 +802,7 @@ const FormStack = ({
                 color: "#344563",
               }}
             >
-              We appericiate your time and effort
+              {params?.FdBk_Page_LastNote ?? "Thank you for your time"}
             </Typography>
             <Button
               sx={{
@@ -781,39 +831,12 @@ const FormStack = ({
           </Box>
         </Box>
       )}
-      <Box
-        sx={{
-          position: "absolute",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-          justifyContent: "center",
-        }}
-      >
-        <Typography
-          sx={{
-            fontFamily,
-            fontWeight: "600",
-            fontSize: "1.1rem",
-            color: "#344563",
-          }}
-        >
-          Powered by
-        </Typography>
-        <img
-          src={footor}
-          alt="Darziware"
-          style={{
-            height: "80px",
-            width: "auto",
-          }}
-        />
-      </Box>
+
       <UpperLeftIllustration
         style={{
           position: "absolute",
-          top: "17%",
-          left: "4%",
+          top: "13%",
+          left: "2%",
         }}
         theme={theme}
       />
@@ -942,6 +965,7 @@ const MainPage = ({ data, params }) => {
         flexDirection: "column",
         background: "#fff",
         alignItems: "center",
+        position: "relative",
         justifyContent: {
           xl: "center",
           lg: "center",
@@ -975,6 +999,36 @@ const MainPage = ({ data, params }) => {
         />
         {!isFinished && <Illustration params={params} theme={theme} />}
       </Grid>
+      <Box
+        sx={{
+          position: "absolute",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          right: "2%",
+          bottom: "2%",
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily,
+            fontWeight: "600",
+            fontSize: "1.1rem",
+            color: "#344563",
+          }}
+        >
+          Powered by
+        </Typography>
+        <img
+          src={footor}
+          alt="Darziware"
+          style={{
+            height: "47px",
+            width: "auto",
+          }}
+        />
+      </Box>
     </Box>
   ) : orderFound ? (
     <PreLoader />
