@@ -19,6 +19,7 @@ import footor from "./_assets/darzi.png";
 import NotFound from "./_assets/NotFound.png";
 import makeColorLighter, { checkHex } from "./Componenets/ColorChanger";
 import getFontColorBasedOnColor from "./Componenets/FontBaseColor";
+import uuid from "react-uuid";
 
 export const fontFamily = "Poppins";
 
@@ -202,6 +203,8 @@ const QuestionCard = ({
   currentQuestion,
   handleBack,
   theme,
+  feedback,
+  setFeedback
 }) => {
   const currentTarget = currQ;
   const [score, setScore] = useState(0);
@@ -577,7 +580,14 @@ const IntroRow = ({ params, currentQuestion, theme }) => {
   );
 };
 
-const FormStack = ({ params, isFinished, setIsFinished, theme }) => {
+const FormStack = ({
+  params,
+  isFinished,
+  setIsFinished,
+  theme,
+  feedback,
+  setFeedback,
+}) => {
   const [questions, setQuestions] = useState([]);
 
   const [currentQuestion, setCurrentQuestion] = useState(1);
@@ -588,6 +598,15 @@ const FormStack = ({ params, isFinished, setIsFinished, theme }) => {
     const realOrder = realTarget?.orders;
     setQuestions(realOrder?.questions);
     setCurrQ(realOrder?.questions[0]);
+    setFeedback((_) => {
+      return realOrder.questions.map((item) => ({
+        dent: uuid,
+        Rating: 0,
+        question: item.id,
+        Comment: "",
+        order: realOrder.id,
+      }));
+    });
   }, [params]);
 
   useEffect(() => {
@@ -678,6 +697,8 @@ const FormStack = ({ params, isFinished, setIsFinished, theme }) => {
               currentQuestion={currentQuestion}
               handleBack={handleBack}
               theme={theme}
+              feedback={feedback}
+              setFeedback={setFeedback}
             />
           </Box>
         </>
@@ -875,6 +896,8 @@ const MainPage = ({ data, params }) => {
   const [target, setTarget] = useState();
   const [orderFound, setOrderFound] = useState(true);
 
+  const [feedback, setFeedback] = useState([]);
+
   useEffect(() => {
     const realTarget = data.find((ele) => Number(ele.id) === Number(bu_id));
     const realOrder = realTarget?.orders.find(
@@ -947,6 +970,8 @@ const MainPage = ({ data, params }) => {
           isFinished={isFinished}
           setIsFinished={setIsFinished}
           theme={theme}
+          feedback={feedback}
+          setFeedback={setFeedback}
         />
         {!isFinished && <Illustration params={params} theme={theme} />}
       </Grid>
