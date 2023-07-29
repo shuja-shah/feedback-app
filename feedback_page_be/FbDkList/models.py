@@ -3,13 +3,16 @@ from django.db import models
 
 
 class FdBkConfig(models.Model):
+    def logo_upload_path(instance, filename):
+        return f"logos/{instance.BU_ID}/{filename}"
+
     # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     BU_ID = models.IntegerField(null=True)
     BU_Name = models.CharField(max_length=255, null=True)
     BU_Address = models.TextField(null=True)
     BU_Email_Id = models.EmailField(max_length=255, null=True)
     BU_Contact_Number = models.CharField(max_length=20, null=True)
-    BU_Logo = models.ImageField(upload_to="logos/", null=True)
+    BU_Logo = models.ImageField(upload_to=logo_upload_path, null=True)
     BU_ColorTheme = models.CharField(max_length=20, null=True)
     bu_font_color = models.CharField(
         max_length=20, null=True
