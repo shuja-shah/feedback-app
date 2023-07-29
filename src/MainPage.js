@@ -15,9 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import EmojiRatings from "./Componenets/StyledRating";
 import { CircularProgress } from "@mui/material";
-import Logo from "./_assets/Check1.jpg";
-import Check2 from "./_assets/Check2.png";
-import Check3 from "./_assets/Check3.jpg";
+import footor from "./_assets/darzi.png";
 import NotFound from "./_assets/NotFound.png";
 import makeColorLighter, { checkHex } from "./Componenets/ColorChanger";
 import getFontColorBasedOnColor from "./Componenets/FontBaseColor";
@@ -520,8 +518,8 @@ const IntroRow = ({ params, currentQuestion, theme }) => {
           }}
         >
           <img
-            // src={params?.BU_Logo}
-            src={Check3}
+            src={params?.BU_Logo}
+            // src={Check3}
             alt="logo"
             style={{
               width: "auto",
@@ -762,6 +760,34 @@ const FormStack = ({ params, isFinished, setIsFinished, theme }) => {
           </Box>
         </Box>
       )}
+      <Box
+        sx={{
+          position: "absolute",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          justifyContent: "center",
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily,
+            fontWeight: "600",
+            fontSize: "1.1rem",
+            color: "#344563",
+          }}
+        >
+          Powered by
+        </Typography>
+        <img
+          src={footor}
+          alt="Darziware"
+          style={{
+            height: "80px",
+            width: "auto",
+          }}
+        />
+      </Box>
       <UpperLeftIllustration
         style={{
           position: "absolute",
