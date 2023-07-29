@@ -1,0 +1,48 @@
+You must have the following to start.
+
+1 Python
+2 Node JS With NPM
+
+
+## Installation (Virtual enviroment)
+
+Open your terminal and in root folder (where this file is located, run the following commands)
+
+```
+npm install
+```
+or 
+
+``` 
+npm install --force
+```
+
+
+After Installing all the dependeinces of the front end, proceed to install the backend dependecies with the following commands (For windows)
+
+```
+cd ./feedback_page_be
+python -m venv venv
+./venv/Scripts/activate
+pip install -r requirements.txt
+
+```
+
+## Running the application
+
+To start the backend server you must have an acitivated virtual enviroment (the enviroment u activated with the above commands)
+    
+    ```
+    py manage.py runserver 8888
+
+    ```
+
+
+To Run the frontend server go to the root directory in another terminal and run the following command
+
+    ```
+    npm start
+
+    ```
+    
+    
