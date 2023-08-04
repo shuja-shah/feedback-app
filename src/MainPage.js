@@ -579,7 +579,7 @@ const IntroRow = ({ params, currentQuestion, theme }) => {
             alt="logo"
             style={{
               width: "auto",
-              height: "120px",
+              height: "90px",
             }}
           />
         </div>

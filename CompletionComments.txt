@@ -1,0 +1,13 @@
+-AlphaNumeric BU ID (UUID HASH)
+- Validate Max 100 Char
+-Data Presistance Back and Forth
+- feeling to 1.2 rem , and Center
+- Last Note To be center alinged and 50% of the parent size.
+- Average rating, on Order level 
+- Stars
+- 79% on Powerd By, on Last Step
+
+COMPLETED
+
+1000
+
