@@ -645,6 +645,7 @@ const FormStack = ({
 
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [currQ, setCurrQ] = useState();
+  const [avg, setAvg] = useState(0);
 
   useEffect(() => {
     const realTarget = params;
@@ -691,7 +692,10 @@ const FormStack = ({
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ feedback_completed: true }),
+              body: JSON.stringify({
+                feedback_completed: true,
+                order_avg_rating: parseFloat(avg.toFixed(2)),
+              }),
             }
           );
           if (res2.status === 200) {
@@ -709,12 +713,12 @@ const FormStack = ({
     }
   };
 
-  const [avg, setAvg] = useState(0);
   useEffect(() => {
     const sum = feedback.reduce((acc, curr) => acc + curr.Rating, 0);
     setAvg(sum / feedback.length);
   }, [feedback]);
 
+  console.log("recieving params,", params);
   return (
     <Grid
       item
@@ -808,7 +812,11 @@ const FormStack = ({
           >
             <Tooltip title="Your average Score">
               <Rating
-                value={avg}
+                value={
+                  params?.orders?.order_avg_rating
+                    ? params.orders.order_avg_rating
+                    : avg
+                }
                 readOnly
                 sx={{
                   fontSize: "3rem",
@@ -816,26 +824,35 @@ const FormStack = ({
                 precision={0.5}
               />
             </Tooltip>
-            <Typography
+            <Box
               sx={{
-                fontFamily,
-                fontWeight: "600",
-                fontSize: "2rem",
-                color: "#091E42",
+                display: "flex",
+                flexDirection: "column",
+                width: {xl:"40%", lg:'50%'},
+                alignItems: "flex-start",
               }}
             >
-              Thank you for your feedback!
-            </Typography>
-            <Typography
-              sx={{
-                fontFamily,
-                fontWeight: "400",
-                fontSize: "1.5rem",
-                color: "#344563",
-              }}
-            >
-              {params?.FdBk_Page_LastNote ?? "Thank you for your time"}
-            </Typography>
+              <Typography
+                sx={{
+                  fontFamily,
+                  fontWeight: "600",
+                  fontSize: {xl:"2rem", lg:'1.7rem', md:'1.3rem', sm:'1.2rem', xs:'1.1rem'},
+                  color: "#091E42",
+                }}
+              >
+                Thank you for your feedback!
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily,
+                  fontWeight: "400",
+                  fontSize: {xl:"1.5rem", lg:'1.2rem', md:'1.1rem', sm:'1rem', xs:'0.9rem'},
+                  color: "#344563",
+                }}
+              >
+                {params?.FdBk_Page_LastNote ?? "Thank you for your time"}
+              </Typography>
+            </Box>
             <Button
               sx={{
                 borderRadius: "8px",
@@ -1039,7 +1056,7 @@ const MainPage = ({ data, params }) => {
           alignItems: "flex-end",
           justifyContent: "center",
           right: { xl: "45%", lg: "40%", md: "35%", sm: "35%", xs: "30%" },
-          bottom: "1%",
+          bottom: !isFinished ? "1%" : "11%",
         }}
       >
         <Typography
