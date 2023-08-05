@@ -206,10 +206,22 @@ const QuestionCard = ({
   theme,
   feedback,
   setFeedback,
+  params,
 }) => {
   const currentTarget = currQ;
   const [score, setScore] = useState(0);
   const [comment, setComment] = useState("");
+
+  useEffect(() => {
+    if (Array.isArray(feedback) && feedback.length) {
+      const Target = feedback.find(
+        (ele) => Number(ele.question) === Number(currQ.id)
+      );
+      setScore(Target.Rating);
+      setComment(Target.Comment);
+      console.log('Found Target', Target)
+    }
+  }, [currQ]);
 
   return (
     <Box
@@ -241,7 +253,14 @@ const QuestionCard = ({
         {currentTarget?.Question ?? "no_question"}
       </Typography>
 
-      <Box sx={{ width: "100%", display: "flex", gap: "1rem" }}>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          gap: "1rem",
+          alignItems: "center",
+        }}
+      >
         <>
           {" "}
           {currentTarget?.question_type === "hearts" ? (
@@ -278,6 +297,17 @@ const QuestionCard = ({
                 width: "70%",
                 justifyContent: "space-between",
                 fontSize: "2.6rem",
+                // fill:         score === 1 && checkHex(currentTarget.Score_1_Color)
+                // ? currentTarget.Score_1_Color
+                // : score === 2 && checkHex(currentTarget.Score_2_Color)
+                // ? currentTarget.Score_2_Color
+                // : score === 3 && checkHex(currentTarget.Score_3_Color)
+                // ? currentTarget.Score_2_Color
+                // : score === 4 && checkHex(currentTarget.Score_4_Color)
+                // ? currentTarget.Score_4_Color
+                // : score === 5 && checkHex(currentTarget.Score_5_Color)
+                // ? currentTarget.Score_5_Color
+                // : "red",
               }}
               value={score}
               onChange={(_, newValue) => {
@@ -290,7 +320,19 @@ const QuestionCard = ({
               fontFamily,
               fontWeight: "600",
               color: "#344563",
-              fontSize: "1.5rem",
+              fontSize: "1.2rem",
+              color:
+                score === 1 && checkHex(currentTarget.Score_1_Color)
+                  ? currentTarget.Score_1_Color
+                  : score === 2 && checkHex(currentTarget.Score_2_Color)
+                  ? currentTarget.Score_2_Color
+                  : score === 3 && checkHex(currentTarget.Score_3_Color)
+                  ? currentTarget.Score_2_Color
+                  : score === 4 && checkHex(currentTarget.Score_4_Color)
+                  ? currentTarget.Score_4_Color
+                  : score === 5 && checkHex(currentTarget.Score_5_Color)
+                  ? currentTarget.Score_5_Color
+                  : "#344563",
             }}
           >
             {score === 1
@@ -785,6 +827,7 @@ const FormStack = ({
               theme={theme}
               feedback={feedback}
               setFeedback={setFeedback}
+              params={params}
             />
           </Box>
         </>
@@ -828,7 +871,7 @@ const FormStack = ({
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                width: {xl:"40%", lg:'50%'},
+                width: { xl: "40%", lg: "50%" },
                 alignItems: "flex-start",
               }}
             >
@@ -836,7 +879,13 @@ const FormStack = ({
                 sx={{
                   fontFamily,
                   fontWeight: "600",
-                  fontSize: {xl:"2rem", lg:'1.7rem', md:'1.3rem', sm:'1.2rem', xs:'1.1rem'},
+                  fontSize: {
+                    xl: "2rem",
+                    lg: "1.7rem",
+                    md: "1.3rem",
+                    sm: "1.2rem",
+                    xs: "1.1rem",
+                  },
                   color: "#091E42",
                 }}
               >
@@ -846,7 +895,13 @@ const FormStack = ({
                 sx={{
                   fontFamily,
                   fontWeight: "400",
-                  fontSize: {xl:"1.5rem", lg:'1.2rem', md:'1.1rem', sm:'1rem', xs:'0.9rem'},
+                  fontSize: {
+                    xl: "1.5rem",
+                    lg: "1.2rem",
+                    md: "1.1rem",
+                    sm: "1rem",
+                    xs: "0.9rem",
+                  },
                   color: "#344563",
                 }}
               >
