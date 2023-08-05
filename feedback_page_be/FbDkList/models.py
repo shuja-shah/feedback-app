@@ -77,6 +77,7 @@ class Order(models.Model):
     )
     questions = models.ManyToManyField(FdBkQuestions)
     feedback_completed = models.BooleanField(default=False)
+    order_avg_rating = models.FloatField(default=0.0)  # Add the new field here
 
     def all_questions_feedback_completed(self):
         for question in self.questions.all():
@@ -90,7 +91,7 @@ class Feedback(models.Model):
     Rating = models.IntegerField()
     Comment = models.TextField(blank=True, null=True)
     question = models.ForeignKey(FdBkQuestions, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, default=1)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="feedbacks", default=1)
 
     def __str__(self):
         return f"Feedback {self.id}: {self.question}"
