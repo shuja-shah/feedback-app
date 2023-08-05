@@ -2,3 +2,5 @@ django
 Pillow
 djangorestframework
 django-cors-headers
+pyodbc
+django-pyodbc-azure
