@@ -4,3 +4,4 @@ djangorestframework
 django-cors-headers
 pyodbc
 django-pyodbc-azure
+mssql-django   
