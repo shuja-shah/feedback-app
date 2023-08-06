@@ -28,6 +28,18 @@ pip install -r requirements.txt
 
 ```
 
+
+## DEFINING DATABASE
+While remaining in the virtual enviorment, 
+Please do the following steps
+- Goto feedback_page_be/feedback_page_be/settings.py
+- Find Databases List
+- Define your connection string (db user name port host.)
+- Then run the following Query
+py manage.py makemigrations
+py manage.py migrate
+
+
 ## Running the application
 
 To start the backend server you must have an acitivated virtual enviroment (the enviroment u activated with the above commands)
@@ -36,6 +48,8 @@ To start the backend server you must have an acitivated virtual enviroment (the 
     py manage.py runserver 8888
 
     ```
+
+
 
 
 To Run the frontend server go to the root directory in another terminal and run the following command
