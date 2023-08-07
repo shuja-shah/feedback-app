@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import FdBkConfig, Order, FdBkQuestions, Feedback
+from .models import FdBkConfig, TOrdHead, FdBkQuestions, FdBk
 
 # Register your models here.
 
 admin.site.register(FdBkConfig)
-admin.site.register(Order)
+admin.site.register(TOrdHead)
 admin.site.register(FdBkQuestions)
-admin.site.register(Feedback)
+admin.site.register(FdBk)

@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView
-from .models import FdBkConfig, Order, Feedback
+from .models import FdBkConfig, TOrdHead, FdBk
 from .serializers import FdBkConfigSerializer, OrderSerializer, FeedbackSerializer,OrderUpdateSerializer
 from rest_framework import generics
 
@@ -10,13 +10,13 @@ class FdBkConfigListView(ListAPIView):
 
 
 class OrderDetailView(RetrieveAPIView):
-    queryset = Order.objects.all()
+    queryset = TOrdHead.objects.all()
     serializer_class = OrderSerializer
     # lookup_field = 'order_number'
 
 
 class FeedbackCreateView(generics.CreateAPIView):
-    queryset = Feedback.objects.all()
+    queryset = FdBk.objects.all()
     serializer_class = FeedbackSerializer
 
     def perform_create(self, serializer):
@@ -33,6 +33,6 @@ class FeedbackCreateView(generics.CreateAPIView):
 
 
 class OrderUpdateView(UpdateAPIView):
-    queryset = Order.objects.all()
+    queryset = TOrdHead.objects.all()
     serializer_class = OrderUpdateSerializer
     lookup_field = 'id'

@@ -58,7 +58,7 @@ class FdBkQuestions(models.Model):
     Score_5_Color = models.CharField(max_length=15)
     Score_5_FollowUp_Question = models.TextField()
     Score_5_Display_Message = models.TextField()
-    # BranchId = models.BigIntegerField()
+    BranchId = models.BigIntegerField(null=True, blank=True)
     question_type = models.CharField(max_length=20)
 
     # order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
@@ -67,10 +67,10 @@ class FdBkQuestions(models.Model):
         return f"{self.Question}"
 
 
-class Order(models.Model):
+class TOrdHead(models.Model):
     # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    order_number = models.CharField(max_length=20)
-    order_date = models.DateField()
+    TOrdNo = models.CharField(max_length=20)
+    TOrdDate = models.DateField()
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     business = models.ForeignKey(
         FdBkConfig, on_delete=models.CASCADE, related_name="orders"
@@ -78,6 +78,14 @@ class Order(models.Model):
     questions = models.ManyToManyField(FdBkQuestions)
     feedback_completed = models.BooleanField(default=False)
     order_avg_rating = models.FloatField(default=0.0)  # Add the new field here
+    CompanyId = models.ForeignKey(
+        FdBkConfig, on_delete=models.CASCADE, related_name="orders_company"
+    )
+    Address = models.CharField(blank=True, null=True, max_length=500)
+    Avg_Rating = models.FloatField(default=0.0)
+    OverAll_Comment = models.CharField(blank=True, null=True, max_length=900)
+    BranchId = models.IntegerField(blank=True, null=True)
+    # TOrdHdID = models.BigAutoField()
 
     def all_questions_feedback_completed(self):
         for question in self.questions.all():
@@ -86,12 +94,19 @@ class Order(models.Model):
         return True
 
 
-class Feedback(models.Model):
-    # Question = models.TextField()
+class FdBk(models.Model):
+    Question = models.TextField(blank=True, null=True)
     Rating = models.IntegerField()
     Comment = models.TextField(blank=True, null=True)
     question = models.ForeignKey(FdBkQuestions, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="feedbacks", default=1)
+    order = models.ForeignKey(
+        TOrdHead, on_delete=models.CASCADE, related_name="feedbacks", default=1
+    )
+    OrderUId = models.ForeignKey(
+        TOrdHead, on_delete=models.CASCADE, related_name="feedbacksUids", default=1
+    )
+    CompanyId = models.IntegerField(blank=True, null=True)
+    BranchId = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"Feedback {self.id}: {self.question}"

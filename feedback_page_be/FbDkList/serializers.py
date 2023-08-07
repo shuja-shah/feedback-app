@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import FdBkConfig, Order, FdBkQuestions, Feedback
+from .models import FdBkConfig, TOrdHead, FdBkQuestions, FdBk
 
 
 class FdBkQuestionsSerializer(serializers.ModelSerializer):
@@ -10,7 +10,7 @@ class FdBkQuestionsSerializer(serializers.ModelSerializer):
 
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Feedback
+        model = FdBk
         fields = "__all__"
 
 
@@ -19,7 +19,7 @@ class OrderSerializer(serializers.ModelSerializer):
     feedbacks = FeedbackSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Order
+        model = TOrdHead
         fields = "__all__"
 
 
@@ -33,5 +33,5 @@ class FdBkConfigSerializer(serializers.ModelSerializer):
 
 class OrderUpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Order
+        model = TOrdHead
         fields = ["order_avg_rating", "feedback_completed"]
