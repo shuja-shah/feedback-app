@@ -62,9 +62,6 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-
-
-
 ROOT_URLCONF = "feedback_page_be.urls"
 
 TEMPLATES = [
@@ -89,29 +86,29 @@ WSGI_APPLICATION = "feedback_page_be.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'mssql',
-#         'NAME': 'feedback',  # Replace with your SQL Server database name
-#         'USER': 'admin',  # Replace with your SQL Server database username
-#         'PASSWORD': 'admin',  # Replace with your SQL Server database password
-#         'HOST': 'localhost',  
-#         'PORT': '1433',  
-#         'OPTIONS': {
-#             'driver': 'ODBC Driver 17 for SQL Server', 
-#         },
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "feedback",  # Replace with your SQL Server database name
+        "USER": "admin",  # Replace with your SQL Server database username
+        "PASSWORD": "admin",  # Replace with your SQL Server database password
+        "HOST": "localhost",
+        "PORT": "1433",
+        "OPTIONS": {
+            "driver": "ODBC Driver 17 for SQL Server",
+        },
+    }
+}
 
 
 # Fix the database point it to db.sqlite3
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -153,5 +150,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'logos')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "logos")
