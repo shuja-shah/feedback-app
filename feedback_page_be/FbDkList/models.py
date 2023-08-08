@@ -7,6 +7,7 @@ class FdBkConfig(models.Model):
         return f"logos/{instance.BU_ID}/{filename}"
 
     # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    ID = models.AutoField(primary_key=True)
     BU_ID = models.IntegerField(null=True)
     BU_Name = models.CharField(max_length=255, null=True)
     BU_Address = models.TextField(null=True)
@@ -30,7 +31,7 @@ class FdBkConfig(models.Model):
 
 
 class FdBkQuestions(models.Model):
-    # Id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    Id = models.AutoField(primary_key=True)
     Question = models.TextField()
     IsMandatory = models.CharField(max_length=30)
     Score_1_Feeling = models.CharField(max_length=30)
@@ -86,7 +87,7 @@ class TOrdHead(models.Model):
     OverAll_Comment = models.CharField(blank=True, null=True, max_length=900)
     BranchId = models.IntegerField(blank=True, null=True)
     TOrdHdID = models.AutoField(primary_key=True, default=1)
-
+    TrackID = models.CharField(blank=True, null=True, max_length=50)
     def all_questions_feedback_completed(self):
         for question in self.questions.all():
             if not Feedback.objects.filter(question=question, order=self).exists():
@@ -99,12 +100,17 @@ class FdBk(models.Model):
     Rating = models.IntegerField()
     Comment = models.TextField(blank=True, null=True)
     question = models.ForeignKey(FdBkQuestions, on_delete=models.CASCADE)
-    order = models.ForeignKey(
+    # order = models.ForeignKey(
+    #     TOrdHead, on_delete=models.CASCADE, related_name="feedbacks", default=1
+    # )
+    # OrderUId = models.ForeignKey(
+    #     TOrdHead, on_delete=models.CASCADE, related_name="feedbacks", default=1
+    # )
+    #add field OrderUId forieng key with TOrdHead model
+    OrderUId = models.ForeignKey(
         TOrdHead, on_delete=models.CASCADE, related_name="feedbacks", default=1
     )
-    OrderUId = models.ForeignKey(
-        TOrdHead, on_delete=models.CASCADE, related_name="feedbacksUids", default=1
-    )
+
     CompanyId = models.IntegerField(blank=True, null=True)
     BranchId = models.IntegerField(blank=True, null=True)
 
