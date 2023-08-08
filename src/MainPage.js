@@ -219,7 +219,7 @@ const QuestionCard = ({
       );
       setScore(Target.Rating);
       setComment(Target.Comment);
-      console.log('Found Target', Target)
+      console.log("Found Target", Target);
     }
   }, [currQ]);
 
@@ -1026,10 +1026,11 @@ const MainPage = ({ data, params }) => {
   const [feedback, setFeedback] = useState([]);
 
   useEffect(() => {
-    const realTarget = data.find((ele) => Number(ele.id) === Number(bu_id));
+    const realTarget = data.find((ele) => Number(ele.ID) === Number(bu_id));
     const realOrder = realTarget?.orders.find(
-      (odr) => Number(odr.id) === Number(order_id)
+      (odr) => Number(odr.TOrdHdID) === Number(order_id)
     );
+    console.log("found realOrder", realOrder);
     if (!realOrder) {
       setTimeout(() => {
         setOrderFound(false);
