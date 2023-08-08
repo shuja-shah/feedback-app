@@ -85,7 +85,7 @@ class TOrdHead(models.Model):
     Avg_Rating = models.FloatField(default=0.0)
     OverAll_Comment = models.CharField(blank=True, null=True, max_length=900)
     BranchId = models.IntegerField(blank=True, null=True)
-    # TOrdHdID = models.BigAutoField()
+    TOrdHdID = models.AutoField(primary_key=True, default=1)
 
     def all_questions_feedback_completed(self):
         for question in self.questions.all():
