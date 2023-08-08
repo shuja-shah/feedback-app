@@ -34,4 +34,4 @@ class FdBkConfigSerializer(serializers.ModelSerializer):
 class OrderUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = TOrdHead
-        fields = ["order_avg_rating", "feedback_completed"]
+        fields = ["order_avg_rating", "feedback_completed", "Avg_Rating"]

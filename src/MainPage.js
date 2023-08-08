@@ -215,7 +215,7 @@ const QuestionCard = ({
   useEffect(() => {
     if (Array.isArray(feedback) && feedback.length) {
       const Target = feedback.find(
-        (ele) => Number(ele.question) === Number(currQ.id)
+        (ele) => Number(ele.question) === Number(currQ.Id)
       );
       setScore(Target.Rating);
       setComment(Target.Comment);
@@ -698,7 +698,7 @@ const FormStack = ({
       return realOrder.questions.map((item) => ({
         dent: uuid,
         Rating: 0,
-        question: item.id,
+        question: item.Id,
         Comment: "",
         order: realOrder.id,
       }));
@@ -728,7 +728,7 @@ const FormStack = ({
         });
         if (index === feedback.length - 1) {
           const res2 = await fetch(
-            `${ENDPOINT}/api/orders/${params.orders.id}/update/`,
+            `${ENDPOINT}/api/orders/${params.orders.TOrdHdID}/update/`,
             {
               method: "PUT",
               headers: {
@@ -737,6 +737,7 @@ const FormStack = ({
               body: JSON.stringify({
                 feedback_completed: true,
                 order_avg_rating: parseFloat(avg.toFixed(2)),
+                Avg_Rating: parseFloat(avg.toFixed(2)),
               }),
             }
           );
@@ -1062,7 +1063,7 @@ const MainPage = ({ data, params }) => {
     tertiryColor,
   };
 
-  return target && "id" in target.orders ? (
+  return target && "TOrdHdID" in target.orders ? (
     <Box
       sx={{
         height: "100vh",
