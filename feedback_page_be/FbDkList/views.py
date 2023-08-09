@@ -19,16 +19,16 @@ class FeedbackCreateView(generics.CreateAPIView):
     queryset = FdBk.objects.all()
     serializer_class = FeedbackSerializer
 
-    def perform_create(self, serializer):
-        # Call the default perform_create method to save the instance
-        feedback = serializer.save()
+    # def perform_create(self, serializer):
+    #     # Call the default perform_create method to save the instance
+    #     feedback = serializer.save()
 
-        # Get the order associated with the feedback
-        order = feedback.question.order
+    #     # Get the order associated with the feedback
+    #     order = feedback.question.order
 
-        # Check if all questions have feedback and update the feedback_completed flag
-        order.feedback_completed = order.all_questions_feedback_completed
-        order.save()
+    #     # Check if all questions have feedback and update the feedback_completed flag
+    #     order.feedback_completed = order.all_questions_feedback_completed
+    #     order.save()
 
 
 
