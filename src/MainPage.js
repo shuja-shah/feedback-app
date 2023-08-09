@@ -214,12 +214,13 @@ const QuestionCard = ({
 
   useEffect(() => {
     if (Array.isArray(feedback) && feedback.length) {
+      console.log(currQ, "as CurrQ");
       const Target = feedback.find(
         (ele) => Number(ele.question) === Number(currQ.Id)
       );
       setScore(Target.Rating);
       setComment(Target.Comment);
-      console.log("Found Target", Target);
+      // console.log("Found Target", Target);
     }
   }, [currQ]);
 
@@ -488,7 +489,7 @@ const QuestionCard = ({
             setFeedback((prev) => {
               const shallowCopy = prev.map((item) => ({ ...item }));
               const index = shallowCopy.findIndex(
-                (ele) => Number(ele.question) === Number(currentTarget.id)
+                (ele) => Number(ele.question) === Number(currentTarget.Id)
               );
               if (index !== -1) {
                 shallowCopy[index].Rating = score;
@@ -700,7 +701,7 @@ const FormStack = ({
         Rating: 0,
         question: item.Id,
         Comment: "",
-        order: realOrder.id,
+        order: realOrder.TOrdHdID,
       }));
     });
   }, [params]);
@@ -761,7 +762,6 @@ const FormStack = ({
     setAvg(sum / feedback.length);
   }, [feedback]);
 
-  console.log("recieving params,", params);
   return (
     <Grid
       item
@@ -1016,20 +1016,24 @@ const PageNotFound = () => {
   );
 };
 
-const MainPage = ({ data, params , orderFound, setOrderFound,target, setTarget}) => {
+const MainPage = ({
+  data,
+  params,
+  orderFound,
+  setOrderFound,
+  target,
+  setTarget,
+}) => {
   const url = new URL(window.location.href);
   const bu_id = url.searchParams.get("bu_id");
   const order_id = url.searchParams.get("order_id");
   const [isFinished, setIsFinished] = useState(false);
   // const [] = useState();
 
-
   const [feedback, setFeedback] = useState([]);
   useEffect(() => {
-    console.log(target,'recieving Props')
-  },[target])
-
-
+    console.log(target, "recieving Props");
+  }, [target]);
 
   // useEffect(() => {
   //   const realTarget = data.find((ele) => Number(ele.ID) === Number(bu_id));
@@ -1067,8 +1071,8 @@ const MainPage = ({ data, params , orderFound, setOrderFound,target, setTarget})
     secondaryColor,
     tertiryColor,
   };
-//&& "TOrdHdID" in target?.orders
-  return target  ? (
+  //&& "TOrdHdID" in target?.orders
+  return target ? (
     <Box
       sx={{
         height: "100vh",
