@@ -872,7 +872,7 @@ const FormStack = ({
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                width: { xl: "40%", lg: "50%" },
+                width: { xl: "70%", lg: "60%" },
                 alignItems: "flex-start",
               }}
             >

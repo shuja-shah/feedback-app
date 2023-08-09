@@ -35,4 +35,4 @@ class FeedbackCreateView(generics.CreateAPIView):
 class OrderUpdateView(UpdateAPIView):
     queryset = TOrdHead.objects.all()
     serializer_class = OrderUpdateSerializer
-    lookup_field = 'TOrdHdID'
+    lookup_field = 'pk'
