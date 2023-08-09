@@ -70,8 +70,8 @@ const UpperLeftIllustration = ({ style, theme }) => {
 const BottomRightIllustration = ({ style, theme }) => {
   return (
     <svg
-      width={143}
-      height={87}
+      width={113}
+      height={77}
       viewBox="0 0 143 87"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -80,8 +80,8 @@ const BottomRightIllustration = ({ style, theme }) => {
       <rect
         x="11.4399"
         y={4}
-        width={141}
-        height="28.875"
+        width={121}
+        height="23.875"
         transform="rotate(23.34 11.4399 4)"
         fill={theme.tertiryColor}
       />
@@ -949,7 +949,7 @@ const FormStack = ({
       <BottomRightIllustration
         style={{
           position: "absolute",
-          bottom: "2%",
+          bottom: "-1%",
           right: "11%",
         }}
         theme={theme}
@@ -1016,35 +1016,40 @@ const PageNotFound = () => {
   );
 };
 
-const MainPage = ({ data, params }) => {
+const MainPage = ({ data, params , orderFound, setOrderFound,target, setTarget}) => {
   const url = new URL(window.location.href);
   const bu_id = url.searchParams.get("bu_id");
   const order_id = url.searchParams.get("order_id");
   const [isFinished, setIsFinished] = useState(false);
-  const [target, setTarget] = useState();
-  const [orderFound, setOrderFound] = useState(true);
+  // const [] = useState();
+
 
   const [feedback, setFeedback] = useState([]);
-
   useEffect(() => {
-    const realTarget = data.find((ele) => Number(ele.ID) === Number(bu_id));
-    const realOrder = realTarget?.orders.find(
-      (odr) => Number(odr.TOrdHdID) === Number(order_id)
-    );
-    console.log("found realOrder", realOrder);
-    if (!realOrder) {
-      setTimeout(() => {
-        setOrderFound(false);
-      }, 5000);
-    } else {
-      setTimeout(() => {
-        setTarget({
-          ...realTarget,
-          orders: { ...realOrder },
-        });
-      }, 3600);
-    }
-  }, [data]);
+    console.log(target,'recieving Props')
+  },[target])
+
+
+
+  // useEffect(() => {
+  //   const realTarget = data.find((ele) => Number(ele.ID) === Number(bu_id));
+  //   const realOrder = realTarget?.orders.find(
+  //     (odr) => Number(odr.TOrdHdID) === Number(order_id)
+  //   );
+  //   console.log("found realOrder", realOrder);
+  //   if (!realOrder) {
+  //     setTimeout(() => {
+  //       setOrderFound(false);
+  //     }, 5000);
+  //   } else {
+  //     setTimeout(() => {
+  //       setTarget({
+  //         ...realTarget,
+  //         orders: { ...realOrder },
+  //       });
+  //     }, 3600);
+  //   }
+  // }, [data]);
 
   const primaryColor = checkHex(target?.BU_ColorTheme)
     ? target?.BU_ColorTheme
@@ -1062,8 +1067,8 @@ const MainPage = ({ data, params }) => {
     secondaryColor,
     tertiryColor,
   };
-
-  return target && "TOrdHdID" in target.orders ? (
+//&& "TOrdHdID" in target?.orders
+  return target  ? (
     <Box
       sx={{
         height: "100vh",
